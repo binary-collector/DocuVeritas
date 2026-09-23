@@ -43,9 +43,9 @@
 
   /* Light theme (default) */
   --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #212529;
-  --text-secondary: #495057;
+  --bg-secondary: #f5f7fa;
+  --text-primary: #1a1a2e;
+  --text-secondary: #4a5568;
 }
 
 /* Dark theme */
@@ -2295,6 +2295,41 @@ body.dark-theme .navbar {
     gap: 16px;
   }
 
+  /* Android Demo Button Optimization */
+  .demo-tab {
+    padding: 14px 16px !important;
+    min-height: 48px !important;
+    font-size: 0.85rem !important;
+  }
+
+  .btn {
+    min-height: 48px !important;
+    padding: 14px 24px !important;
+    font-size: 0.95rem !important;
+    border-radius: 8px !important;
+  }
+
+  .btn-lg {
+    min-height: 52px !important;
+    padding: 16px 32px !important;
+  }
+
+  .btn-primary {
+    background: #1a73e8 !important;
+    color: white !important;
+  }
+
+  .btn-accent {
+    background: #00c896 !important;
+    color: white !important;
+  }
+
+  .btn-outline {
+    background: transparent !important;
+    border-color: #1a73e8 !important;
+    color: #1a73e8 !important;
+  }
+
   /* Android specific optimizations */
   * {
     -webkit-user-select: none;
@@ -2390,6 +2425,13 @@ body.dark-theme .navbar {
   body.dark-theme input::placeholder,
   body.dark-theme textarea::placeholder {
     color: #a0a0a0 !important;
+  }
+
+  /* Desktop mode on Android (responsive) */
+  @supports (aspect-ratio: 1) {
+    body {
+      font-size: 16px;
+    }
   }
 }
 
