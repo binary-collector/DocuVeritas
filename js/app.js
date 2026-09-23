@@ -10,12 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeIcon = themeToggle.querySelector('.theme-icon');
   const savedTheme = localStorage.getItem('theme') || 'light';
 
+  // Ensure light theme is default - remove dark class on load
+  document.body.classList.remove('dark-theme');
+
   // Apply saved theme
   if (savedTheme === 'dark') {
     document.body.classList.add('dark-theme');
     themeIcon.textContent = '☀️';
   } else {
-    document.body.classList.remove('dark-theme');
     themeIcon.textContent = '🌙';
   }
 
