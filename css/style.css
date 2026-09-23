@@ -1704,7 +1704,7 @@ p {
 /* Mobile Devices (<=768px) */
 @media (max-width: 768px) {
   /* Hide theme toggle on mobile as requested */
-  .theme-toggle {
+  .desktop-theme-toggle {
     display: none !important;
   }
 
@@ -1942,4 +1942,9 @@ p {
   .mobile-brand {
     display: none !important;
   }
+}
+
+/* Hide mobile theme toggle on desktop */
+@media (min-width: 769px) {
+  .mobile-theme-toggle { display: none !important; }
 }

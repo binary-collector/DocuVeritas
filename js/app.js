@@ -6,8 +6,10 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   // --- Theme Toggle with System Preference ---
-  const themeToggle = document.getElementById('themeToggle');
-  const themeIcon = themeToggle.querySelector('.theme-icon');
+  const themeToggleDesktop = document.getElementById('themeToggle');
+  const themeToggleMobile = document.getElementById('themeToggleMobile');
+  const themeIconDesktop = themeToggleDesktop ? themeToggleDesktop.querySelector('.theme-icon') : null;
+  const themeIconMobile = themeToggleMobile ? themeToggleMobile.querySelector('.theme-icon') : null;
 
   // Check for saved theme or system preference
   const savedTheme = localStorage.getItem('theme');
@@ -17,36 +19,45 @@ document.addEventListener('DOMContentLoaded', () => {
   let initialTheme = savedTheme || (prefersDarkMode ? 'dark' : 'light');
 
   // Apply initial theme
-  if (initialTheme === 'dark') {
-    document.body.classList.add('dark-theme');
-    themeIcon.textContent = '☀️';
-  } else {
-    document.body.classList.remove('dark-theme');
-    themeIcon.textContent = '🌙';
+  function applyTheme(isDark) {
+    if (isDark) {
+      document.body.classList.add('dark-theme');
+      if (themeIconDesktop) themeIconDesktop.textContent = '☀️';
+      if (themeIconMobile) themeIconMobile.textContent = '☀️';
+    } else {
+      document.body.classList.remove('dark-theme');
+      if (themeIconDesktop) themeIconDesktop.textContent = '🌙';
+      if (themeIconMobile) themeIconMobile.textContent = '🌙';
+    }
   }
+
+  applyTheme(initialTheme === 'dark');
 
   // Listen for system theme changes
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
     if (!localStorage.getItem('theme')) {
       // Only auto-switch if user hasn't manually chosen a theme
-      if (e.matches) {
-        document.body.classList.add('dark-theme');
-        themeIcon.textContent = '☀️';
-      } else {
-        document.body.classList.remove('dark-theme');
-        themeIcon.textContent = '🌙';
-      }
+      applyTheme(e.matches);
     }
   });
 
-  // Toggle theme on button click
-  themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-theme');
-    const isDark = document.body.classList.contains('dark-theme');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    themeIcon.textContent = isDark ? '☀️' : '🌙';
-  });
+  // Toggle theme on button click (desktop)
+  if (themeToggleDesktop) {
+    themeToggleDesktop.addEventListener('click', () => {
+      const isDark = document.body.classList.contains('dark-theme');
+      applyTheme(!isDark);
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    });
+  }
 
+  // Toggle theme on button click (mobile)
+  if (themeToggleMobile) {
+    themeToggleMobile.addEventListener('click', () => {
+      const isDark = document.body.classList.contains('dark-theme');
+      applyTheme(!isDark);
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    });
+  }
   // --- Navbar scroll effect ---
   const navbar = document.querySelector('.navbar');
   window.addEventListener('scroll', () => {

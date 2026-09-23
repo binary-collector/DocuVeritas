@@ -24,14 +24,15 @@
       </a>
       <ul class="nav-links">
         <li><a href="#features" class="active">Features</a></li>
-        <li><a href="#how-it-works">How It Works</a></li>
         <li><a href="#demo">Live Demo</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
         <li><a href="#dashboard">Dashboard</a></li>
         <li><a href="#technology">Technology</a></li>
         <li><a href="#team">Team</a></li>
         <li><a href="#demo" class="btn btn-primary btn-sm">Try Demo</a></li>
+        <li class="mobile-toggle-li"><button class="theme-toggle mobile-theme-toggle" id="themeToggleMobile" aria-label="Toggle dark/light theme"><span class="theme-icon">🌙</span></button></li>
       </ul>
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme">
+      <button class="theme-toggle desktop-theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme">
         <span class="theme-icon">🌙</span>
       </button>
       <div class="mobile-brand" style="display:none;font-size:1.2rem;font-weight:800;color:var(--text-primary)">DocuVeritas</div>
@@ -143,39 +144,6 @@
           <div class="feature-icon teal">📊</div>
           <h3>Risk Scoring & Analytics</h3>
           <p>Comprehensive risk scores with explainable AI — every flag comes with clear reasoning and supporting evidence for audit trails.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== HOW IT WORKS ========== -->
-  <section class="section" id="how-it-works">
-    <div class="container">
-      <div class="section-header animate-on-scroll">
-        <span class="overline">Process</span>
-        <h2>How DocuVeritas Works</h2>
-        <p>From document upload to verified result in under 5 seconds — our four-stage pipeline ensures thorough yet rapid screening.</p>
-      </div>
-      <div class="steps-container animate-on-scroll">
-        <div class="step-card">
-          <div class="step-number">1</div>
-          <h3>Upload / Capture</h3>
-          <p>Upload a document image or capture it via webcam. Our pre-processor corrects skew, lighting, and resolution automatically.</p>
-        </div>
-        <div class="step-card">
-          <div class="step-number">2</div>
-          <h3>Data Extraction</h3>
-          <p>OCR and MRZ parsers extract all text fields, barcodes, and embedded data. The document type and issuing country are auto-classified.</p>
-        </div>
-        <div class="step-card">
-          <div class="step-number">3</div>
-          <h3>Multi-Layer Analysis</h3>
-          <p>AI models run 30+ forensic checks: font analysis, security feature detection, photo integrity, cross-field validation, and database lookups.</p>
-        </div>
-        <div class="step-card">
-          <div class="step-number">4</div>
-          <h3>Verdict & Report</h3>
-          <p>A confidence score and detailed report are generated with pass/fail per check, flagged anomalies, and recommended actions.</p>
         </div>
       </div>
     </div>
@@ -494,6 +462,40 @@
     </div>
   </section>
 
+<!-- ========== HOW IT WORKS ========== -->
+  <section class="section" id="how-it-works">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="overline">Process</span>
+        <h2>How DocuVeritas Works</h2>
+        <p>From document upload to verified result in under 5 seconds — our four-stage pipeline ensures thorough yet rapid screening.</p>
+      </div>
+      <div class="steps-container animate-on-scroll">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Upload / Capture</h3>
+          <p>Upload a document image or capture it via webcam. Our pre-processor corrects skew, lighting, and resolution automatically.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Data Extraction</h3>
+          <p>OCR and MRZ parsers extract all text fields, barcodes, and embedded data. The document type and issuing country are auto-classified.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Multi-Layer Analysis</h3>
+          <p>AI models run 30+ forensic checks: font analysis, security feature detection, photo integrity, cross-field validation, and database lookups.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <h3>Verdict & Report</h3>
+          <p>A confidence score and detailed report are generated with pass/fail per check, flagged anomalies, and recommended actions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
   <!-- ========== STATS ========== -->
   <section class="section section-dark" id="stats">
     <div class="container">
@@ -769,6 +771,7 @@
           <ul>
             <li><a href="#features">Features</a></li>
             <li><a href="#demo">Live Demo</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
             <li><a href="#dashboard">Dashboard</a></li>
             <li><a href="#">API Docs</a></li>
             <li><a href="#">Pricing</a></li>
