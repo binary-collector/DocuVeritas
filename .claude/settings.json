@@ -1,0 +1,37 @@
+﻿{
+  "permissions": {
+    "allow": [
+      "Bash(ls *)",
+      "Bash(ls -la *)",
+      "Bash(pwd)",
+      "Bash(find * -type f -name \"*.*\")",
+      "Bash(git status *)",
+      "Bash(git log *)",
+      "Bash(git diff *)",
+      "Bash(git show *)",
+      "Bash(git branch *)",
+      "Bash(git remote *)",
+      "Bash(git ls-files *)",
+      "Bash(cat *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(wc *)",
+      "Bash(file *)",
+      "PowerShell(Get-ChildItem *)",
+      "PowerShell(Get-Content *)",
+      "PowerShell(Get-Item *)",
+      "PowerShell(Test-Path *)",
+      "PowerShell(Resolve-Path *)",
+      "PowerShell(Where-Object *)",
+      "PowerShell(Select-Object *)",
+      "PowerShell(Measure-Object *)",
+      "PowerShell(Get-Command *)",
+      "PowerShell(Get-Help *)",
+      "PowerShell(Get-Process *)",
+      "PowerShell(Get-Service *)",
+      "PowerShell(Get-EventLog *)",
+      "PowerShell(Get-WmiObject *)",
+      "PowerShell(Get-CimInstance *)"
+    ]
+  }
+}
