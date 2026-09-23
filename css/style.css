@@ -50,8 +50,8 @@
 
 /* Dark theme */
 body.dark-theme {
-  --primary: #4da6ff;
-  --primary-dark: #3d8bdb;
+  --primary: #5eb3ff;
+  --primary-dark: #4da6ff;
   --primary-light: #1a3a5c;
   --accent: #00ff88;
   --accent-dark: #00cc6a;
@@ -61,28 +61,28 @@ body.dark-theme {
   --warning-light: #2d1f0a;
   --success: #51cf66;
   --success-light: #0d1f0a;
-  --dark: #0f0f23;
-  --dark-secondary: #1a1a3a;
-  --gray-50: #1a1a2e;
-  --gray-100: #16213e;
-  --gray-200: #0f3460;
-  --gray-300: #1a2540;
-  --gray-400: #2d3e50;
-  --gray-500: #5a6c7d;
-  --gray-600: #7a8a9d;
-  --gray-700: #9aabbd;
-  --gray-800: #c0d0dd;
-  --gray-900: #e9ecef;
-  --white: #0f0f23;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
-  --shadow-lg: 0 8px 30px rgba(0,0,0,0.5);
-  --shadow-xl: 0 20px 60px rgba(0,0,0,0.6);
+  --dark: #0a0a15;
+  --dark-secondary: #151525;
+  --gray-50: #2a2a40;
+  --gray-100: #353550;
+  --gray-200: #404060;
+  --gray-300: #4a4a70;
+  --gray-400: #555580;
+  --gray-500: #707090;
+  --gray-600: #8a8aaa;
+  --gray-700: #a0a0c0;
+  --gray-800: #c0c0e0;
+  --gray-900: #e0e0ff;
+  --white: #0a0a15;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.6);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.7);
+  --shadow-xl: 0 20px 60px rgba(0,0,0,0.8);
 
-  --bg-primary: #0f0f1a;
-  --bg-secondary: #1a1a2e;
+  --bg-primary: #0a0a15;
+  --bg-secondary: #151525;
   --text-primary: #ffffff;
-  --text-secondary: #e0e0e0;
+  --text-secondary: #d0d0d0;
 }
 
 /* Dark theme text enhancements */
@@ -2348,6 +2348,48 @@ body.dark-theme .navbar {
   body [role="button"] {
     -webkit-user-select: text;
     user-select: text;
+  }
+
+  /* Android dark theme text fix */
+  body.dark-theme {
+    background-color: #0a0a15;
+    color: #ffffff;
+  }
+
+  body.dark-theme p {
+    color: #d0d0d0;
+  }
+
+  body.dark-theme h1,
+  body.dark-theme h2,
+  body.dark-theme h3,
+  body.dark-theme h4 {
+    color: #ffffff;
+  }
+
+  body.dark-theme .card,
+  body.dark-theme .feature-card,
+  body.dark-theme .demo-container {
+    background-color: #151525 !important;
+    color: #ffffff;
+  }
+
+  body.dark-theme button,
+  body.dark-theme .btn {
+    color: #ffffff;
+  }
+
+  body.dark-theme input,
+  body.dark-theme textarea,
+  body.dark-theme select {
+    background-color: #353550 !important;
+    color: #ffffff !important;
+    border-color: #505070 !important;
+  }
+
+  body.dark-theme input::placeholder,
+  body.dark-theme textarea::placeholder {
+    color: #a0a0a0 !important;
   }
 }
 
