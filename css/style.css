@@ -50,14 +50,6 @@
 
 /* Dark theme */
 body.dark-theme {
-  --bg-primary: #0f0f1a;
-  --bg-secondary: #1a1a2e;
-  --text-primary: #e9ecef;
-  --text-secondary: #adb5bd;
-}
-
-/* Dark theme */
-html[data-theme="dark"] {
   --primary: #4da6ff;
   --primary-dark: #3d8bdb;
   --primary-light: #1a3a5c;
@@ -86,6 +78,11 @@ html[data-theme="dark"] {
   --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
   --shadow-lg: 0 8px 30px rgba(0,0,0,0.5);
   --shadow-xl: 0 20px 60px rgba(0,0,0,0.6);
+
+  --bg-primary: #0f0f1a;
+  --bg-secondary: #1a1a2e;
+  --text-primary: #e9ecef;
+  --text-secondary: #adb5bd;
 }
 
 /* --- Reset & Base --- */
