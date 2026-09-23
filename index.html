@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DocuVeritas — AI-Based Fake Identity & Document Screening System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="#" class="navbar-brand">
+        <div class="logo-icon">🛡️</div>
+        <span>DocuVeritas</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features" class="active">Features</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#demo">Live Demo</a></li>
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="#technology">Technology</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="#demo" class="btn btn-primary btn-sm">Try Demo</a></li>
+      </ul>
+      <button class="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1>
+            Stop Fraud Before It Starts with
+            <span class="highlight">AI-Powered Document Screening</span>
+          </h1>
+          <p>
+            DocuVeritas uses advanced machine learning, computer vision, and multi-layer forensic analysis
+            to detect forged documents and fake identities in real time — protecting your business
+            from fraud, identity theft, and regulatory risk.
+          </p>
+          <div class="hero-actions">
+            <a href="#demo" class="btn btn-accent btn-lg">🔍 Try Live Demo</a>
+            <a href="#how-it-works" class="btn btn-outline btn-lg" style="border-color:var(--gray-400);color:var(--gray-300)">Learn More →</a>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <span class="number" data-counter data-target="2500000" data-suffix="+">0</span>
+              <span class="label">Documents Scanned</span>
+            </div>
+            <div class="hero-stat">
+              <span class="number" data-counter data-target="99" data-suffix=".7%">0</span>
+              <span class="label">Detection Accuracy</span>
+            </div>
+            <div class="hero-stat">
+              <span class="number" data-counter data-target="180" data-suffix="+">0</span>
+              <span class="label">Countries Supported</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-card">
+            <div class="scan-animation">
+              <div class="scan-line"></div>
+              <div class="doc-preview">
+                <div class="doc-header">
+                  <div class="doc-photo"></div>
+                  <div class="doc-lines">
+                    <div class="doc-line"></div>
+                    <div class="doc-line"></div>
+                    <div class="doc-line"></div>
+                  </div>
+                </div>
+                <div style="margin-top:12px">
+                  <div class="doc-line" style="width:90%;height:3px;background:rgba(255,255,255,0.1);margin-bottom:4px"></div>
+                  <div class="doc-line" style="width:90%;height:3px;background:rgba(255,255,255,0.1);margin-bottom:4px"></div>
+                  <div class="doc-line" style="width:60%;height:3px;background:rgba(255,255,255,0.1)"></div>
+                </div>
+              </div>
+            </div>
+            <div class="hero-badges">
+              <span class="hero-badge verified">✓ MRZ Valid</span>
+              <span class="hero-badge scanning">◉ Scanning...</span>
+              <span class="hero-badge verified">✓ Hologram OK</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FEATURES ========== -->
+  <section class="section section-light" id="features">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="overline">Capabilities</span>
+        <h2>Comprehensive Document & Identity Screening</h2>
+        <p>Our AI engine combines multiple analytical layers to deliver industry-leading fraud detection accuracy across 6,500+ document types.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon blue">🔬</div>
+          <h3>Forensic Document Analysis</h3>
+          <p>Deep pixel-level examination of fonts, microprinting, security threads, watermarks, and substrate composition to detect physical forgeries.</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon green">🧬</div>
+          <h3>MRZ & Barcode Validation</h3>
+          <p>Automated parsing and checksum verification of Machine-Readable Zones (ICAO 9303), PDF417 barcodes, and QR codes against official standards.</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon orange">🤖</div>
+          <h3>AI Fraud Detection</h3>
+          <p>Deep learning models trained on 50M+ document samples detect tampering, photo substitution, and digital manipulation invisible to the human eye.</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon red">👤</div>
+          <h3>Facial Biometric Matching</h3>
+          <p>Compare document photos to selfies with 99.4% accuracy. Includes liveness detection and deepfake/GAN image detection.</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon purple">🔗</div>
+          <h3>Cross-Reference Intelligence</h3>
+          <p>Real-time checks against global watchlists, sanctions databases, PEP lists, and fraud registries across 180+ countries.</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon teal">📊</div>
+          <h3>Risk Scoring & Analytics</h3>
+          <p>Comprehensive risk scores with explainable AI — every flag comes with clear reasoning and supporting evidence for audit trails.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== HOW IT WORKS ========== -->
+  <section class="section" id="how-it-works">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="overline">Process</span>
+        <h2>How DocuVeritas Works</h2>
+        <p>From document upload to verified result in under 5 seconds — our four-stage pipeline ensures thorough yet rapid screening.</p>
+      </div>
+      <div class="steps-container animate-on-scroll">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Upload / Capture</h3>
+          <p>Upload a document image or capture it via webcam. Our pre-processor corrects skew, lighting, and resolution automatically.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Data Extraction</h3>
+          <p>OCR and MRZ parsers extract all text fields, barcodes, and embedded data. The document type and issuing country are auto-classified.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Multi-Layer Analysis</h3>
+          <p>AI models run 30+ forensic checks: font analysis, security feature detection, photo integrity, cross-field validation, and database lookups.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <h3>Verdict & Report</h3>
+          <p>A confidence score and detailed report are generated with pass/fail per check, flagged anomalies, and recommended actions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== LIVE DEMO ========== -->
+  <section class="section section-light" id="demo">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="overline">Interactive Demo</span>
+        <h2>Try DocuVeritas Now</h2>
+        <p>Experience our screening engine with pre-loaded sample documents and identity profiles. No sign-up required — results are simulated for demonstration.</p>
+      </div>
+
+      <div class="demo-container animate-on-scroll">
+        <div class="demo-tabs">
+          <button class="demo-tab active" data-panel="panel-document">📄 Document Screening</button>
+          <button class="demo-tab" data-panel="panel-identity">👤 Identity Verification</button>
+          <button class="demo-tab" data-panel="panel-face">🧑 Face Match</button>
+          <button class="demo-tab" data-panel="panel-batch">📦 Batch Processing</button>
+        </div>
+
+        <!-- === DOCUMENT SCREENING PANEL === -->
+        <div class="demo-content">
+          <div class="demo-panel active" id="panel-document">
+            <h3 style="margin-bottom:8px">Document Authenticity Screening</h3>
+            <p style="color:var(--gray-500);margin-bottom:24px;font-size:0.9rem">Upload your own document or select a sample below to run a full forensic analysis.</p>
+
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+              <input type="file" id="documentUpload" accept="image/*,.pdf" style="display:none">
+              <div class="upload-icon">📤</div>
+              <h4>Upload Document for Verification</h4>
+              <p>Drag & drop or click to select</p>
+              <p style="font-size:0.8rem;margin-top:8px;color:var(--gray-500)">Supports: JPG, PNG, PDF (Max 10MB)</p>
+              <button class="btn btn-primary" style="margin-top:16px" onclick="document.getElementById('documentUpload').click()">
+                📁 Choose File
+              </button>
+            </div>
+
+            <!-- Preview of uploaded image -->
+            <div id="uploadedPreview" style="display:none;margin-top:20px;text-align:center">
+              <h4 style="margin-bottom:12px">Uploaded Document Preview</h4>
+              <div style="position:relative;display:inline-block">
+                <img id="uploadedImage" style="max-width:100%;max-height:400px;border-radius:var(--radius-md);border:2px solid var(--gray-300)">
+                <button class="btn btn-danger btn-sm" id="clearUpload" style="position:absolute;top:8px;right:8px">✕ Remove</button>
+              </div>
+              <div style="margin-top:16px">
+                <button class="btn btn-accent btn-lg" id="analyzeUpload">🔍 Analyze Document</button>
+              </div>
+            </div>
+
+            <div style="margin:32px 0;text-align:center;color:var(--gray-400);font-size:0.85rem">
+              — OR TRY A SAMPLE DOCUMENT —
+            </div>
+
+            <div class="sample-docs">
+              <div class="sample-doc" data-doc="passport_genuine">
+                <div class="doc-icon">🛂</div>
+                <div class="doc-name">US Passport</div>
+                <div class="doc-type">Genuine Document</div>
+                <span class="badge badge-success" style="margin-top:8px">AUTHENTIC</span>
+              </div>
+              <div class="sample-doc" data-doc="passport_fake">
+                <div class="doc-icon">🛂</div>
+                <div class="doc-name">UK Passport</div>
+                <div class="doc-type">Forged Document</div>
+                <span class="badge badge-danger" style="margin-top:8px">FRAUDULENT</span>
+              </div>
+              <div class="sample-doc" data-doc="drivers_license_suspicious">
+                <div class="doc-icon">🪪</div>
+                <div class="doc-name">CA Driver's License</div>
+                <div class="doc-type">Suspicious Document</div>
+                <span class="badge badge-warning" style="margin-top:8px">SUSPICIOUS</span>
+              </div>
+              <div class="sample-doc" data-doc="id_card_genuine">
+                <div class="doc-icon">🆔</div>
+                <div class="doc-name">German ID Card</div>
+                <div class="doc-type">Genuine Document</div>
+                <span class="badge badge-success" style="margin-top:8px">AUTHENTIC</span>
+              </div>
+            </div>
+
+            <!-- Progress -->
+            <div class="progress-container" id="docProgress">
+              <div class="progress-bar"><div class="progress-fill"></div></div>
+              <div class="progress-steps">
+                <span class="progress-step">Extract Data</span>
+                <span class="progress-step">Validate MRZ</span>
+                <span class="progress-step">Security Features</span>
+                <span class="progress-step">AI Analysis</span>
+                <span class="progress-step">Generate Report</span>
+              </div>
+            </div>
+
+            <!-- Results -->
+            <div class="results-panel" id="docResults">
+              <div class="result-header">
+                <div class="result-status">
+                  <div class="status-indicator authentic">✓</div>
+                  <div>
+                    <h4 class="status-title">Document Authentic</h4>
+                    <p class="status-desc" style="font-size:0.85rem;color:var(--gray-500)">Confidence Score: 96%</p>
+                  </div>
+                </div>
+                <span class="badge badge-success">VERIFIED</span>
+              </div>
+              <div class="result-body">
+                <!-- Score Gauge -->
+                <div class="score-gauge">
+                  <div class="gauge-circle">
+                    <svg width="120" height="120">
+                      <circle cx="60" cy="60" r="50" fill="none" stroke="#e9ecef" stroke-width="10"/>
+                      <circle class="gauge-track" cx="60" cy="60" r="50" fill="none" stroke="#27ae60" stroke-width="10"
+                              stroke-dasharray="314" stroke-dashoffset="12" stroke-linecap="round"/>
+                    </svg>
+                    <div class="gauge-text">
+                      <span class="gauge-value" style="color:var(--success)">96%</span>
+                      <span class="gauge-label">Score</span>
+                    </div>
+                  </div>
+                  <div class="gauge-details">
+                    <h4>SARAH M. JOHNSON</h4>
+                    <p>United States of America — C04567891</p>
+                  </div>
+                </div>
+
+                <!-- Checks -->
+                <h4 style="margin-bottom:12px">🔍 Verification Checks</h4>
+                <div class="checks-grid"></div>
+
+                <!-- Findings -->
+                <div class="findings-section" style="display:none">
+                  <h4>⚠️ Anomalies Detected</h4>
+                  <div class="findings-list"></div>
+                </div>
+
+                <!-- Metadata -->
+                <h4 style="margin-top:24px;margin-bottom:4px">📋 Document Metadata</h4>
+                <div class="metadata-grid"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- === IDENTITY VERIFICATION PANEL === -->
+          <div class="demo-panel" id="panel-identity">
+            <h3 style="margin-bottom:8px">Identity Risk Assessment</h3>
+            <p style="color:var(--gray-500);margin-bottom:16px;font-size:0.9rem">Enter identity details or use a pre-loaded profile to run KYC/AML screening.</p>
+
+            <div style="margin-bottom:20px">
+              <p style="font-size:0.85rem;font-weight:600;margin-bottom:8px">Quick-fill sample profiles:</p>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button class="btn btn-sm btn-outline prefill-btn" data-email="john.doe@email.com">✅ John Doe (Clean)</button>
+                <button class="btn btn-sm btn-outline prefill-btn" data-email="jane.smith@mail.com" style="border-color:var(--warning);color:var(--warning)">⚠️ Jane Smith (Medium Risk)</button>
+                <button class="btn btn-sm btn-outline prefill-btn" data-email="alex.fraud@tempmail.xyz" style="border-color:var(--danger);color:var(--danger)">🚨 Alex Thompson (High Risk)</button>
+              </div>
+            </div>
+
+            <form id="identityForm">
+              <div class="identity-form">
+                <div class="form-group">
+                  <label>Full Name</label>
+                  <input type="text" id="idName" placeholder="e.g. John Doe" required>
+                </div>
+                <div class="form-group">
+                  <label>Email Address</label>
+                  <input type="email" id="idEmail" placeholder="e.g. john.doe@email.com" required>
+                </div>
+                <div class="form-group">
+                  <label>Phone Number</label>
+                  <input type="tel" id="idPhone" placeholder="e.g. +1-555-0123">
+                </div>
+                <div class="form-group">
+                  <label>SSN Last 4 Digits</label>
+                  <input type="text" id="idSSN" placeholder="e.g. 4532" maxlength="4">
+                </div>
+                <div class="form-group">
+                  <label>Date of Birth</label>
+                  <input type="date" id="idDOB">
+                </div>
+                <div class="form-group">
+                  <label>Address</label>
+                  <input type="text" id="idAddress" placeholder="e.g. 123 Main St, City, State ZIP">
+                </div>
+                <div class="form-group full-width" style="margin-top:8px">
+                  <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center">
+                    🔍 Run Identity Verification
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <!-- Progress -->
+            <div class="progress-container" id="idProgress">
+              <div class="progress-bar"><div class="progress-fill"></div></div>
+              <p style="text-align:center;font-size:0.85rem;color:var(--gray-500);margin-top:8px">Running KYC/AML checks...</p>
+            </div>
+
+            <!-- Results -->
+            <div class="results-panel" id="idResults">
+              <div class="result-header">
+                <div class="result-status">
+                  <div>
+                    <h4 style="font-size:1.1rem"><span class="id-name">John Doe</span></h4>
+                    <p class="id-email" style="font-size:0.85rem;color:var(--gray-500)">john.doe@email.com</p>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px">
+                  <span style="font-size:2rem;font-weight:800" class="id-score">92%</span>
+                  <span class="badge risk-badge badge-success">LOW RISK</span>
+                </div>
+              </div>
+              <div class="result-body">
+                <div class="findings-section">
+                  <h4>⚠️ Risk Flags</h4>
+                  <div class="id-flags"></div>
+                </div>
+                <div style="margin-top:20px">
+                  <h4 style="margin-bottom:12px">📋 Verification History</h4>
+                  <div class="id-history"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- === FACE MATCH PANEL === -->
+          <div class="demo-panel" id="panel-face">
+            <h3 style="margin-bottom:8px">Facial Biometric Matching</h3>
+            <p style="color:var(--gray-500);margin-bottom:24px;font-size:0.9rem">Select a scenario to simulate face comparison between a document photo and a selfie.</p>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px">
+              <div class="sample-doc face-scenario" data-scenario="match" style="border:2px solid transparent">
+                <div class="doc-icon">👤 ↔ 👤</div>
+                <div class="doc-name">Same Person</div>
+                <div class="doc-type">Document photo matches selfie</div>
+                <span class="badge badge-success" style="margin-top:8px">EXPECTED: MATCH</span>
+              </div>
+              <div class="sample-doc face-scenario" data-scenario="mismatch" style="border:2px solid transparent">
+                <div class="doc-icon">👤 ↔ 👥</div>
+                <div class="doc-name">Different People</div>
+                <div class="doc-type">Selfie doesn't match document</div>
+                <span class="badge badge-danger" style="margin-top:8px">EXPECTED: MISMATCH</span>
+              </div>
+              <div class="sample-doc face-scenario" data-scenario="deepfake" style="border:2px solid transparent">
+                <div class="doc-icon">👤 ↔ 🤖</div>
+                <div class="doc-name">Deepfake Attack</div>
+                <div class="doc-type">AI-generated synthetic face</div>
+                <span class="badge badge-danger" style="margin-top:8px">EXPECTED: DEEPFAKE</span>
+              </div>
+            </div>
+
+            <button class="btn btn-primary btn-lg" id="runFaceMatch" style="width:100%;justify-content:center">
+              🧑 Run Face Comparison
+            </button>
+
+            <!-- Progress -->
+            <div class="progress-container" id="faceProgress">
+              <div class="progress-bar"><div class="progress-fill"></div></div>
+              <p style="text-align:center;font-size:0.85rem;color:var(--gray-500);margin-top:8px">Analyzing facial biometrics...</p>
+            </div>
+
+            <!-- Results -->
+            <div class="results-panel" id="faceResults">
+              <div class="result-header">
+                <div class="result-status">
+                  <div>
+                    <h4 class="face-verdict" style="font-size:1.3rem;font-weight:800">MATCH</h4>
+                    <p style="font-size:0.85rem;color:var(--gray-500)">Similarity Score: <strong class="face-score-val">98.7%</strong></p>
+                  </div>
+                </div>
+                <span class="badge face-badge badge-success">MATCH</span>
+              </div>
+              <div class="result-body">
+                <h4 style="margin-bottom:12px">🔍 Analysis Breakdown</h4>
+                <div class="face-details checks-grid"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- === BATCH PROCESSING PANEL === -->
+          <div class="demo-panel" id="panel-batch">
+            <h3 style="margin-bottom:8px">Batch Document Processing</h3>
+            <p style="color:var(--gray-500);margin-bottom:24px;font-size:0.9rem">Process multiple documents at once. Click below to simulate scanning a batch of 8 documents through our pipeline.</p>
+
+            <button class="btn btn-primary btn-lg" id="runBatch" style="width:100%;justify-content:center;margin-bottom:24px">
+              📦 Process Batch (8 Documents)
+            </button>
+
+            <!-- Progress -->
+            <div class="progress-container" id="batchProgress">
+              <div class="progress-bar"><div class="progress-fill"></div></div>
+              <p style="text-align:center;font-size:0.85rem;color:var(--gray-500);margin-top:8px">Processing batch...</p>
+            </div>
+
+            <!-- Results -->
+            <div class="results-panel" id="batchResults">
+              <div id="batchStats" style="margin-bottom:20px"></div>
+              <div style="overflow-x:auto">
+                <table class="recent-scans-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Document</th>
+                      <th>Type</th>
+                      <th>Score</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="batchTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== STATS ========== -->
+  <section class="section section-dark" id="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card animate-on-scroll">
+          <span class="stat-number" data-counter data-target="2500000">0</span>
+          <span class="stat-label">Documents Screened</span>
+        </div>
+        <div class="stat-card animate-on-scroll">
+          <span class="stat-number" data-counter data-target="6500">0</span>
+          <span class="stat-label">Document Types Supported</span>
+        </div>
+        <div class="stat-card animate-on-scroll">
+          <span class="stat-number" data-counter data-target="185">0</span>
+          <span class="stat-label">Countries Covered</span>
+        </div>
+        <div class="stat-card animate-on-scroll">
+          <span class="stat-number" data-counter data-target="340">0</span>
+          <span class="stat-label">Enterprise Clients</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== DASHBOARD PREVIEW ========== -->
+  <section class="section" id="dashboard">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="overline">Analytics</span>
+        <h2>Real-Time Screening Dashboard</h2>
+        <p>Monitor all screening activity, flag trends, and compliance metrics from a single unified dashboard.</p>
+      </div>
+
+      <div class="dashboard-grid animate-on-scroll">
+        <!-- Recent Scans -->
+        <div class="dashboard-card">
+          <h4>📋 Recent Screening Activity</h4>
+          <table class="recent-scans-table">
+            <thead>
+              <tr>
+                <th>Document</th>
+                <th>Date</th>
+                <th>Score</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>US Passport — S. Johnson</td>
+                <td>Sep 23, 2026</td>
+                <td><strong style="color:var(--success)">96%</strong></td>
+                <td><span class="badge badge-success">Authentic</span></td>
+              </tr>
+              <tr>
+                <td>UK Passport — J. Williams</td>
+                <td>Sep 23, 2026</td>
+                <td><strong style="color:var(--danger)">18%</strong></td>
+                <td><span class="badge badge-danger">Fraudulent</span></td>
+              </tr>
+              <tr>
+                <td>CA DL — M. Chen</td>
+                <td>Sep 22, 2026</td>
+                <td><strong style="color:var(--warning)">42%</strong></td>
+                <td><span class="badge badge-warning">Suspicious</span></td>
+              </tr>
+              <tr>
+                <td>German ID — A. Mueller</td>
+                <td>Sep 22, 2026</td>
+                <td><strong style="color:var(--success)">94%</strong></td>
+                <td><span class="badge badge-success">Authentic</span></td>
+              </tr>
+              <tr>
+                <td>French Passport — L. Dubois</td>
+                <td>Sep 21, 2026</td>
+                <td><strong style="color:var(--success)">91%</strong></td>
+                <td><span class="badge badge-success">Authentic</span></td>
+              </tr>
+              <tr>
+                <td>Brazil ID — R. Santos</td>
+                <td>Sep 21, 2026</td>
+                <td><strong style="color:var(--warning)">55%</strong></td>
+                <td><span class="badge badge-warning">Suspicious</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Threat Distribution -->
+        <div class="dashboard-card">
+          <h4>📊 Threat Distribution (This Week)</h4>
+          <div class="chart-bars" style="margin-bottom:36px">
+            <div class="chart-bar" style="height:85%;background:var(--success)">
+              <span class="bar-value">62%</span>
+              <span class="bar-label">Authentic</span>
+            </div>
+            <div class="chart-bar" style="height:35%;background:var(--warning)">
+              <span class="bar-value">18%</span>
+              <span class="bar-label">Suspicious</span>
+            </div>
+            <div class="chart-bar" style="height:20%;background:var(--danger)">
+              <span class="bar-value">12%</span>
+              <span class="bar-label">Forged</span>
+            </div>
+            <div class="chart-bar" style="height:12%;background:var(--gray-500)">
+              <span class="bar-value">8%</span>
+              <span class="bar-label">Expired</span>
+            </div>
+          </div>
+
+          <h4 style="margin-top:40px">🎯 Top Fraud Indicators</h4>
+          <div style="margin-top:12px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <span style="font-size:0.85rem">Photo Manipulation</span>
+              <span style="font-size:0.85rem;font-weight:700">34%</span>
+            </div>
+            <div class="progress-bar" style="margin-bottom:16px">
+              <div class="progress-fill" style="width:34%;background:var(--danger)"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <span style="font-size:0.85rem">MRZ Mismatch</span>
+              <span style="font-size:0.85rem;font-weight:700">28%</span>
+            </div>
+            <div class="progress-bar" style="margin-bottom:16px">
+              <div class="progress-fill" style="width:28%;background:var(--warning)"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <span style="font-size:0.85rem">Missing Security Features</span>
+              <span style="font-size:0.85rem;font-weight:700">22%</span>
+            </div>
+            <div class="progress-bar" style="margin-bottom:16px">
+              <div class="progress-fill" style="width:22%;background:var(--primary)"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <span style="font-size:0.85rem">Data Inconsistency</span>
+              <span style="font-size:0.85rem;font-weight:700">16%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:16%;background:var(--accent)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TECHNOLOGY ========== -->
+  <section class="section section-light" id="technology">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="overline">Under The Hood</span>
+        <h2>Technology Stack</h2>
+        <p>Built on cutting-edge AI/ML technologies and industry-standard security protocols.</p>
+      </div>
+      <div class="tech-grid animate-on-scroll">
+        <div class="tech-card">
+          <div class="tech-icon">🧠</div>
+          <h4>Deep Learning</h4>
+          <p>CNN & Vision Transformer models</p>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon">👁️</div>
+          <h4>Computer Vision</h4>
+          <p>OpenCV & custom pipelines</p>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon">📝</div>
+          <h4>OCR Engine</h4>
+          <p>Tesseract + custom MRZ parser</p>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon">🔒</div>
+          <h4>Encryption</h4>
+          <p>AES-256 & end-to-end TLS</p>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon">☁️</div>
+          <h4>Cloud Infrastructure</h4>
+          <p>AWS/GCP with auto-scaling</p>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon">⚡</div>
+          <h4>Real-Time Processing</h4>
+          <p>Sub-5-second verification</p>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon">📡</div>
+          <h4>API Integration</h4>
+          <p>RESTful & GraphQL endpoints</p>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon">📊</div>
+          <h4>Explainable AI</h4>
+          <p>SHAP & LIME interpretability</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TEAM ========== -->
+  <section class="section" id="team">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="overline">The Team</span>
+        <h2>Built by Team <span class="text-gradient">CodeBusters</span></h2>
+        <p>A passionate team of engineers, researchers, and designers dedicated to making the world safer from document fraud.</p>
+      </div>
+      <div class="team-grid animate-on-scroll">
+        <div class="team-card">
+          <div class="team-avatar" style="background:linear-gradient(135deg,#1a73e8,#4285f4)">CB</div>
+          <h4>CodeBusters</h4>
+          <p class="role">Project Lead</p>
+          <p style="font-size:0.8rem;color:var(--gray-500);margin-top:8px">System Architecture & AI Pipeline</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar" style="background:linear-gradient(135deg,#00c896,#00e6a7)">ML</div>
+          <h4>ML Division</h4>
+          <p class="role">Machine Learning</p>
+          <p style="font-size:0.8rem;color:var(--gray-500);margin-top:8px">Deep Learning & Fraud Detection Models</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar" style="background:linear-gradient(135deg,#7c3aed,#a78bfa)">CV</div>
+          <h4>Vision Team</h4>
+          <p class="role">Computer Vision</p>
+          <p style="font-size:0.8rem;color:var(--gray-500);margin-top:8px">Document Analysis & Biometrics</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar" style="background:linear-gradient(135deg,#f39c12,#f1c40f)">UX</div>
+          <h4>Design Team</h4>
+          <p class="role">UI/UX Design</p>
+          <p style="font-size:0.8rem;color:var(--gray-500);margin-top:8px">Interface Design & User Experience</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA ========== -->
+  <section class="section section-dark">
+    <div class="container text-center">
+      <div class="animate-on-scroll">
+        <h2 style="font-size:2.2rem;font-weight:800;margin-bottom:16px;color:white">
+          Ready to Secure Your Business?
+        </h2>
+        <p style="font-size:1.1rem;color:var(--gray-400);max-width:600px;margin:0 auto 32px">
+          Join 340+ enterprises worldwide that trust DocuVeritas to protect them from document fraud and identity theft.
+        </p>
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+          <a href="#demo" class="btn btn-accent btn-lg">🚀 Get Started Free</a>
+          <a href="#features" class="btn btn-lg" style="border:2px solid var(--gray-500);color:var(--gray-300)">📞 Contact Sales</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="navbar-brand">
+            <div class="logo-icon">🛡️</div>
+            <span>DocuVeritas</span>
+          </a>
+          <p style="margin-top:12px">
+            AI-Powered Fake Identity & Document Screening System.
+            Protecting businesses and individuals from fraud since 2024.
+          </p>
+          <p style="margin-top:16px;font-size:0.85rem;opacity:0.7">
+            Created by <strong>Team CodeBusters</strong>
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#demo">Live Demo</a></li>
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#">API Docs</a></li>
+            <li><a href="#">Pricing</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Case Studies</a></li>
+            <li><a href="#">Security Whitepaper</a></li>
+            <li><a href="#">Compliance</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#team">Team</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 DocuVeritas by Team CodeBusters. All rights reserved.</p>
+        <div class="footer-social">
+          <a href="#" title="GitHub">💻</a>
+          <a href="#" title="Twitter">🐦</a>
+          <a href="#" title="LinkedIn">💼</a>
+          <a href="#" title="Email">📧</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
