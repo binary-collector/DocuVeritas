@@ -5,21 +5,39 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // --- Theme Toggle ---
+  // --- Theme Toggle with System Preference ---
   const themeToggle = document.getElementById('themeToggle');
   const themeIcon = themeToggle.querySelector('.theme-icon');
-  const savedTheme = localStorage.getItem('theme') || 'light';
 
-  // Ensure light theme is default - remove dark class on load
-  document.body.classList.remove('dark-theme');
+  // Check for saved theme or system preference
+  const savedTheme = localStorage.getItem('theme');
+  let prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-  // Apply saved theme
-  if (savedTheme === 'dark') {
+  // Determine initial theme
+  let initialTheme = savedTheme || (prefersDarkMode ? 'dark' : 'light');
+
+  // Apply initial theme
+  if (initialTheme === 'dark') {
     document.body.classList.add('dark-theme');
     themeIcon.textContent = '☀️';
   } else {
+    document.body.classList.remove('dark-theme');
     themeIcon.textContent = '🌙';
   }
+
+  // Listen for system theme changes
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (!localStorage.getItem('theme')) {
+      // Only auto-switch if user hasn't manually chosen a theme
+      if (e.matches) {
+        document.body.classList.add('dark-theme');
+        themeIcon.textContent = '☀️';
+      } else {
+        document.body.classList.remove('dark-theme');
+        themeIcon.textContent = '🌙';
+      }
+    }
+  });
 
   // Toggle theme on button click
   themeToggle.addEventListener('click', () => {

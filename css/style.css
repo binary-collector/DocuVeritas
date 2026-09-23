@@ -337,6 +337,8 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
 }
 
 @media (max-width: 600px) {
@@ -2260,7 +2262,7 @@ body.dark-theme .navbar {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .container {
     padding: 0 12px;
   }
@@ -2291,6 +2293,61 @@ body.dark-theme .navbar {
 
   .dashboard-grid {
     gap: 16px;
+  }
+
+  /* Android specific optimizations */
+  * {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  input, textarea, button, a {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+
+  /* Disable zoom on input focus */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  /* Better touch feedback on Android */
+  button, a, .btn {
+    -webkit-touch-callout: none;
+  }
+
+  /* Improve scrolling performance */
+  body {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .demo-tabs {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Prevent text selection issues */
+  body {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  body * {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  body input,
+  body textarea,
+  body button,
+  body a,
+  body [role="button"] {
+    -webkit-user-select: text;
+    user-select: text;
   }
 }
 
