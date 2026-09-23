@@ -414,7 +414,7 @@ p {
 .theme-toggle {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-center;
   width: 42px;
   height: 42px;
   border-radius: 50%;
@@ -1719,6 +1719,8 @@ p {
 
   .hamburger {
     display: flex;
+    width: 48px;
+    height: 48px;
   }
 
   .nav-links {
@@ -1729,7 +1731,7 @@ p {
     right: 0;
     background: var(--bg-elevated);
     flex-direction: column;
-    padding: 16px;
+    padding: 20px;
     box-shadow: var(--shadow-lg);
     border-top: 1px solid var(--border-color);
     z-index: 999;
