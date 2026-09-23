@@ -11,17 +11,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const savedTheme = localStorage.getItem('theme') || 'light';
 
   // Apply saved theme
-  document.documentElement.setAttribute('data-theme', savedTheme);
-  themeIcon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark-theme');
+    themeIcon.textContent = '☀️';
+  } else {
+    document.body.classList.remove('dark-theme');
+    themeIcon.textContent = '🌙';
+  }
 
   // Toggle theme on button click
   themeToggle.addEventListener('click', () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    themeIcon.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+    document.body.classList.toggle('dark-theme');
+    const isDark = document.body.classList.contains('dark-theme');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    themeIcon.textContent = isDark ? '☀️' : '🌙';
   });
 
   // --- Navbar scroll effect ---

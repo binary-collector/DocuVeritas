@@ -40,6 +40,20 @@
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Light theme (default) */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --text-primary: #212529;
+  --text-secondary: #495057;
+}
+
+/* Dark theme */
+body.dark-theme {
+  --bg-primary: #0f0f1a;
+  --bg-secondary: #1a1a2e;
+  --text-primary: #e9ecef;
+  --text-secondary: #adb5bd;
 }
 
 /* Dark theme */
@@ -88,10 +102,11 @@ html {
 
 body {
   font-family: var(--font-main);
-  color: var(--gray-800);
-  background: var(--white);
+  color: var(--text-primary);
+  background: var(--bg-primary);
   line-height: 1.6;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
@@ -259,6 +274,11 @@ img {
   border-bottom: 1px solid var(--gray-200);
   padding: 0 24px;
   transition: var(--transition);
+}
+
+body.dark-theme .navbar {
+  background: rgba(15, 15, 26, 0.95);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
 .navbar.scrolled {
@@ -1712,4 +1732,32 @@ img {
 
 .metadata-item .meta-value.flagged {
   color: var(--danger);
+}
+
+/* --- Theme Toggle --- */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 1.2rem;
+  transition: var(--transition);
+  color: var(--text-primary);
+}
+
+.theme-toggle:hover {
+  background: var(--bg-secondary);
+}
+
+.theme-toggle-icon {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover .theme-toggle-icon {
+  transform: rotate(20deg);
 }
