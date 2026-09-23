@@ -42,6 +42,38 @@
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
+/* Dark theme */
+html[data-theme="dark"] {
+  --primary: #4da6ff;
+  --primary-dark: #3d8bdb;
+  --primary-light: #1a3a5c;
+  --accent: #00ff88;
+  --accent-dark: #00cc6a;
+  --danger: #ff6b6b;
+  --danger-light: #2d1111;
+  --warning: #ffa500;
+  --warning-light: #2d1f0a;
+  --success: #51cf66;
+  --success-light: #0d1f0a;
+  --dark: #0f0f23;
+  --dark-secondary: #1a1a3a;
+  --gray-50: #1a1a2e;
+  --gray-100: #16213e;
+  --gray-200: #0f3460;
+  --gray-300: #1a2540;
+  --gray-400: #2d3e50;
+  --gray-500: #5a6c7d;
+  --gray-600: #7a8a9d;
+  --gray-700: #9aabbd;
+  --gray-800: #c0d0dd;
+  --gray-900: #e9ecef;
+  --white: #0f0f23;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.5);
+  --shadow-xl: 0 20px 60px rgba(0,0,0,0.6);
+}
+
 /* --- Reset & Base --- */
 *, *::before, *::after {
   margin: 0;
@@ -286,6 +318,27 @@ img {
 .nav-links a:hover,
 .nav-links a.active {
   background: var(--primary-light);
+  color: var(--primary);
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--gray-300);
+  background: transparent;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: var(--transition);
+  margin-right: 12px;
+}
+
+.theme-toggle:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
   color: var(--primary);
 }
 

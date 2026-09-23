@@ -5,6 +5,25 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // --- Theme Toggle ---
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = themeToggle.querySelector('.theme-icon');
+  const savedTheme = localStorage.getItem('theme') || 'light';
+
+  // Apply saved theme
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  themeIcon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+  // Toggle theme on button click
+  themeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    themeIcon.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+  });
+
   // --- Navbar scroll effect ---
   const navbar = document.querySelector('.navbar');
   window.addEventListener('scroll', () => {
