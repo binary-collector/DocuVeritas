@@ -2533,3 +2533,20 @@ body.dark-theme .navbar {
 .theme-toggle:hover .theme-toggle-icon {
   transform: rotate(20deg);
 }
+
+/* Hide theme toggle on Android/Mobile */
+@media (max-width: 768px) {
+  .theme-toggle {
+    display: none !important;
+  }
+
+  .mobile-brand {
+    display: block !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-brand {
+    display: none !important;
+  }
+}
