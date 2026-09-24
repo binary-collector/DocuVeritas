@@ -41,12 +41,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Easter egg counter for theme toggles
+  let themeToggleCount = 0;
+  const EASTER_EGG_THRESHOLD = 5;
+
   // Toggle theme on button click (desktop)
   if (themeToggleDesktop) {
     themeToggleDesktop.addEventListener('click', () => {
       const isDark = document.body.classList.contains('dark-theme');
       applyTheme(!isDark);
       localStorage.setItem('theme', isDark ? 'light' : 'dark');
+
+      // Easter egg logic
+      themeToggleCount++;
+      if (themeToggleCount >= EASTER_EGG_THRESHOLD) {
+        trigger67MemeEasterEgg();
+        themeToggleCount = 0; // Reset after triggering
+      }
     });
   }
 
@@ -56,6 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const isDark = document.body.classList.contains('dark-theme');
       applyTheme(!isDark);
       localStorage.setItem('theme', isDark ? 'light' : 'dark');
+
+      // Easter egg logic
+      themeToggleCount++;
+      if (themeToggleCount >= EASTER_EGG_THRESHOLD) {
+        trigger67MemeEasterEgg();
+        themeToggleCount = 0; // Reset after triggering
+      }
     });
   }
   // --- Navbar scroll effect ---
@@ -64,7 +82,29 @@ document.addEventListener('DOMContentLoaded', () => {
     navbar.classList.toggle('scrolled', window.scrollY > 50);
   });
 
-  // --- Mobile menu ---
+  // Contact popup functionality
+  const contactBtn = document.getElementById('contactBtn');
+  const contactPopup = document.getElementById('contactPopup');
+  const popupClose = document.getElementById('popupClose');
+
+  if (contactBtn && contactPopup && popupClose) {
+    // Open popup
+    contactBtn.addEventListener('click', () => {
+      contactPopup.style.display = 'block';
+    });
+
+    // Close popup when clicking X
+    popupClose.addEventListener('click', () => {
+      contactPopup.style.display = 'none';
+    });
+
+    // Close popup when clicking outside
+    window.addEventListener('click', (e) => {
+      if (e.target === contactPopup) {
+        contactPopup.style.display = 'none';
+      }
+    });
+  }
   const hamburger = document.querySelector('.hamburger');
   const navLinks = document.querySelector('.nav-links');
   if (hamburger) {
@@ -1229,3 +1269,52 @@ function updateBatchStats(docs) {
     `;
   }
 }
+
+// 67 Meme Easter Egg Function
+function trigger67MemeEasterEgg() {
+  // Create and show the 67 meme easter egg
+  const easterEgg = document.createElement('div');
+  easterEgg.style.position = 'fixed';
+  easterEgg.style.top = '50%';
+  easterEgg.style.left = '50%';
+  easterEgg.style.transform = 'translate(-50%, -50%)';
+  easterEgg.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+  easterEgg.style.color = 'white';
+  easterEgg.style.padding = '2rem';
+  easterEgg.style.borderRadius = '1rem';
+  easterEgg.style.textAlign = 'center';
+  easterEgg.style.zIndex = '9999';
+  easterEgg.style.fontFamily = '"JetBrains Mono", monospace';
+  easterEgg.style.boxShadow = '0 0 30px rgba(0, 255, 255, 0.5)';
+  easterEgg.style.animation = 'pulse 2s infinite';
+
+  easterEgg.innerHTML = `
+    <div style="font-size: 4rem; margin-bottom: 1rem;">67</div>
+    <div style="font-size: 1.5rem; margin-bottom: 1rem;">THE NUMBER OF TRUTH</div>
+    <div style="font-size: 1.2rem; opacity: 0.8; max-width: 300px;">
+      In the depths of document verification,<br>
+      the number 67 reveals the hidden patterns<br>
+      that separate truth from deception.<br>
+      <br>
+      Tap five times to unlock the truth...
+    </div>
+  `;
+
+  document.body.appendChild(easterEgg);
+
+  // Remove after 3 seconds
+  setTimeout(() => {
+    easterEgg.remove();
+  }, 3000);
+}
+
+// Add CSS for pulse animation
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes pulse {
+    0% { box-shadow: 0 0 30px rgba(0, 255, 255, 0.5); }
+    50% { box-shadow: 0 0 40px rgba(0, 255, 255, 0.8), 0 0 60px rgba(0, 255, 255, 0.4); }
+    100% { box-shadow: 0 0 30px rgba(0, 255, 255, 0.5); }
+  }
+`;
+document.head.appendChild(style);
