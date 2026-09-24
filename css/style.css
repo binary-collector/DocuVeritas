@@ -169,7 +169,7 @@ img {
 
 /* --- Utility Classes --- */
 .container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 24px;
 }
@@ -503,7 +503,7 @@ p {
 }
 
 .hero-text h1 {
-  font-size: 3.2rem;
+  font-size: 3.8rem;
   font-weight: 800;
   line-height: 1.15;
   color: #ffffff;
@@ -518,16 +518,17 @@ p {
 }
 
 .hero-text p {
-  font-size: 1.15rem;
+  font-size: 1.3rem;
   color: #cbd5e1;
   margin-bottom: 32px;
-  line-height: 1.7;
+  line-height: 1.8;
 }
 
 .hero-actions {
   display: flex;
-  gap: 16px;
+  gap: 24px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .hero-stats {
@@ -733,8 +734,8 @@ p {
 }
 
 .feature-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
   border-color: var(--border-hover);
 }
 

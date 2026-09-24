@@ -370,6 +370,13 @@ function initDocumentScreening() {
       const imgSrc = uploadedImage.src;
       if (imgSrc) {
         analyzeUploadedDocument(uploadedImage);
+        // Auto-scroll to results after analysis
+        setTimeout(() => {
+          const resultsPanel = document.getElementById('docResults');
+          if (resultsPanel) {
+            resultsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 500);
       }
     });
   }
