@@ -86,8 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const contactBtn = document.getElementById('contactBtn');
   const contactPopup = document.getElementById('contactPopup');
   const popupClose = document.getElementById('popupClose');
+  const contactEmail = document.getElementById('contactEmail');
 
-  if (contactBtn && contactPopup && popupClose) {
+  if (contactBtn && contactPopup && popupClose && contactEmail) {
+    // Load email from config
+    if (window.CONFIG && window.CONFIG.contactEmail) {
+      contactEmail.textContent = window.CONFIG.contactEmail;
+    }
+
     // Open popup
     contactBtn.addEventListener('click', () => {
       contactPopup.style.display = 'block';
