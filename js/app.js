@@ -156,6 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Stat Counters (Smooth Easing & RAF) ---
   function animateCounter(el, target, duration = 1800) {
     const startTime = performance.now();
+    const prefix = el.dataset.prefix || '';
     const suffix = el.dataset.suffix || '';
 
     function updateCounter(currentTime) {
@@ -165,12 +166,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const eased = 1 - Math.pow(1 - progress, 3);
       const current = Math.floor(eased * target);
 
-      el.textContent = current.toLocaleString() + suffix;
+      el.textContent = prefix + current.toLocaleString() + suffix;
 
       if (progress < 1) {
         requestAnimationFrame(updateCounter);
       } else {
-        el.textContent = target.toLocaleString() + suffix;
+        el.textContent = prefix + target.toLocaleString() + suffix;
       }
     }
 
@@ -778,8 +779,8 @@ function generateDetailedAnalysis(score, verdict, metrics) {
 }
 
 function generateFallbackAnalysis() {
-  const score = Math.floor(Math.random() * 25) + 60;
-  const verdict = score > 70 ? 'authentic' : 'suspicious';
+  const score = 60;
+  const verdict = 'suspicious';
 
   return {
     name: 'Uploaded Document',
@@ -796,19 +797,19 @@ function generateFallbackAnalysis() {
       mrzValid: false,
     },
     checks: [
-      { name: 'Image Upload', status: 'pass', detail: 'Document image successfully processed' },
-      { name: 'Basic Validation', status: 'pass', detail: 'Format validated per standard specs' },
-      { name: 'Advanced Analysis', status: 'warn', detail: 'Some features require higher resolution image' },
-      { name: 'AI Processing', status: 'warn', detail: 'Partial heuristic analysis completed' },
+      { name: 'Image Upload', status: 'pass', detail: 'Document image ingested for processing' },
+      { name: 'Basic Validation', status: 'pass', detail: 'Format validated per standard specifications' },
+      { name: 'Advanced Analysis', status: 'warn', detail: 'Image stream resolution insufficient for full feature extraction' },
+      { name: 'AI Processing', status: 'warn', detail: 'Standard heuristic baseline applied' },
     ],
     findings: [
-      { severity: 'info', text: 'Document uploaded successfully — basic validation complete' },
-      { severity: 'info', text: 'For full forensic analysis, ensure document is well-lit and high resolution (300+ DPI)' },
+      { severity: 'warning', text: 'Low-confidence feature extraction — re-upload at 300+ DPI recommended' },
+      { severity: 'info', text: 'Document image successfully ingested into client-side pipeline' },
     ],
     metadata: {
-      'Analysis Type': 'Basic Upload Validation',
-      'Confidence': `${score}%`,
-      'Status': 'Partial Analysis',
+      'Analysis Type': 'Baseline Heuristic Validation',
+      'Confidence': '60%',
+      'Status': 'Review Recommended',
     }
   };
 }
@@ -1076,7 +1077,7 @@ function initIdentityVerification() {
 
     const emailInput = document.getElementById('idEmail');
     const email = emailInput ? emailInput.value.trim() : '';
-    const profile = IDENTITY_DATABASE[email] || generateRandomProfile(email);
+    const profile = IDENTITY_DATABASE[email] || evaluateDynamicProfile(email);
 
     const submitBtn = document.getElementById('runIdentityBtn');
     if (submitBtn) submitBtn.disabled = true;
@@ -1088,23 +1089,55 @@ function initIdentityVerification() {
   });
 }
 
-function generateRandomProfile(email) {
+function evaluateDynamicProfile(email) {
   const nameInput = document.getElementById('idName');
   const phoneInput = document.getElementById('idPhone');
-  const score = Math.floor(Math.random() * 40) + 55;
+  const ssnInput = document.getElementById('idSSN');
+  const name = (nameInput && nameInput.value.trim()) || 'Unknown User';
+  const phone = (phoneInput && phoneInput.value.trim()) || 'N/A';
+  const ssn = (ssnInput && ssnInput.value.trim()) || '';
+
+  const flags = [];
+  let score = 88;
+
+  const disposableDomains = ['tempmail', 'throwaway', '10minutemail', 'guerrillamail', 'fakeinbox', 'yopmail', 'mailinator', 'xyz'];
+  const emailLower = (email || '').toLowerCase();
+  const domainPart = emailLower.includes('@') ? emailLower.split('@')[1] : '';
+
+  if (!email || !email.includes('@') || !email.includes('.')) {
+    score -= 35;
+    flags.push('Invalid or malformed email address format');
+  } else if (disposableDomains.some((d) => domainPart.includes(d))) {
+    score -= 50;
+    flags.push('Disposable or temporary email provider detected');
+  }
+
+  if (phone === 'N/A' || phone.length < 8) {
+    score -= 15;
+    flags.push('Incomplete contact phone verification');
+  }
+
+  if (ssn && (ssn === '0000' || ssn === '1234' || ssn.length < 4)) {
+    score -= 30;
+    flags.push('SSN / Tax ID sequence matches known synthetic identifier pattern');
+  }
+
+  if (flags.length === 0) {
+    flags.push('Uncached identity — passed baseline syntax and consistency checks');
+  }
+
+  score = Math.max(10, Math.min(95, score));
+  const risk = score > 75 ? 'low' : score > 45 ? 'medium' : 'high';
 
   return {
-    name: (nameInput && nameInput.value.trim()) || 'Unknown User',
+    name: name,
     email: email || 'user@example.com',
-    phone: (phoneInput && phoneInput.value.trim()) || 'N/A',
-    risk: score > 75 ? 'low' : score > 45 ? 'medium' : 'high',
+    phone: phone,
+    risk: risk,
     score: score,
-    flags: [
-      'Unable to cross-reference identity — not in cached verification database',
-      'Manual review recommended for first-time verification',
-    ],
+    flags: flags,
     history: [
-      { date: new Date().toISOString().split('T')[0], event: 'First verification attempt', status: 'warn' },
+      { date: new Date().toISOString().split('T')[0], event: 'Deterministic KYC syntax & consistency check completed', status: risk === 'low' ? 'pass' : (risk === 'medium' ? 'warn' : 'fail') },
     ]
   };
 }

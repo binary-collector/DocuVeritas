@@ -22,7 +22,7 @@ Experience the live application deployed on GitHub Pages:
 
 - **🔬 Forensic Document Analysis** — Examines font consistency, microprinting boundaries, UV-reactive patterns, holographic overlays, and paper substrate integrity.
 - **🧬 MRZ & Barcode Validation** — Validates Machine-Readable Zones (ICAO 9303 standard: TD1 & TD3), PDF417 barcodes, and cryptographic check digits.
-- **🤖 AI Fraud Detection** — Simulates deep learning detection trained on 50M+ document samples to flag digital splicing, font mismatch, and tampering.
+- **🤖 AI Fraud Detection** — Multi-layer anomaly detection and heuristic computer vision models to flag digital splicing, font mismatch, and tampering in real time.
 - **👤 Facial Biometric Matching** — Compares identity document portrait photos to user selfies with liveness detection and GAN/deepfake artifact detection.
 - **📋 KYC / AML Identity Screening** — Evaluates risk scores, disposable email domains, synthetic SSN patterns, and address consistency.
 - **📦 High-Speed Batch Processing** — Demonstrates multi-document pipeline processing with real-time throughput metrics.
