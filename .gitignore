@@ -1,0 +1,21 @@
+# Dependencies & OS
+.DS_Store
+Thumbs.db
+*.bak
+*.backup
+*.tmp
+
+# Editor & Tooling
+.vscode/
+.idea/
+.claude/
+
+# Local Configurations & Credentials
+config.js
+*.env
+*.env.local
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.py

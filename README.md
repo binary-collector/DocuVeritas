@@ -1,123 +1,87 @@
 # 🛡️ DocuVeritas
 
-**AI-Powered Fake Identity & Document Screening System**
+**AI-Based Fake Identity & Document Screening System**  
+*Created by Team CodeBusters (Poornima College of Engineering) for Smart India Hackathon (SIH) 2026*
 
-An advanced web application that detects forged documents and fake identities using machine learning, computer vision, and multi-layer forensic analysis.
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge&logo=github)](https://binary-collector.github.io/DocuVeritas/)
+[![Status](https://img.shields.io/badge/Status-Active-blue?style=for-the-badge)](https://binary-collector.github.io/DocuVeritas/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
-## 🎯 Features
-
-- **Forensic Document Analysis** - Pixel-level examination of security features, fonts, and substrate composition
-- **MRZ & Barcode Validation** - ICAO 9303 standard compliance checking
-- **AI Fraud Detection** - Deep learning models trained on 50M+ document samples
-- **Facial Biometric Matching** - 99.4% accuracy face comparison with liveness detection
-- **Identity Verification** - KYC/AML screening with risk profiling
-- **Batch Processing** - Process multiple documents simultaneously
-- **Real-Time Dashboard** - Monitor screening activity and fraud trends
-
-## 🚀 Live Demo
-
-The application is live and ready to use:
-- **URL**: https://binary-collector.github.io/DocuVeritas/
-
-Try the interactive demos:
-- 📄 Document Screening - Upload or select sample documents
-- 👤 Identity Verification - Run KYC checks on identities
-- 🧑 Face Match - Simulate facial biometric matching
-- 📦 Batch Processing - Process multiple documents at once
-
-## 📁 Project Structure
-
-```
-DocuVeritas/
-├── index.html          # Main landing page
-├── css/
-│   └── style.css       # Complete styling (1600+ lines)
-├── js/
-│   └── app.js          # Application logic & demos (1200+ lines)
-├── .github/
-│   └── workflows/
-│       └── deploy.yml  # GitHub Pages deployment
-└── README.md           # This file
-```
-
-## 💻 Sample Documents in Demo
-
-- **US Passport (Genuine)** - Authentic document with valid MRZ
-- **UK Passport (Forged)** - Fraudulent with failed security checks
-- **CA Driver's License (Suspicious)** - Flags for manual review
-- **German ID Card (Genuine)** - High confidence authentic
-
-## 🔬 How It Works
-
-1. **Upload / Capture** - Submit document image or PDF
-2. **Data Extraction** - OCR and MRZ parsing
-3. **Multi-Layer Analysis** - 30+ forensic checks
-4. **Verdict & Report** - Confidence score with detailed findings
-
-## 🛠️ Built With
-
-- **Frontend**: HTML5, CSS3, Vanilla JavaScript
-- **Computer Vision**: Canvas API, image analysis algorithms
-- **UI/UX**: Modern design system with smooth animations
-- **Deployment**: GitHub Pages + GitHub Actions
-
-## 🎨 Design Features
-
-- Responsive design (mobile, tablet, desktop)
-- Dark/light compatible color scheme
-- Smooth scroll animations
-- Interactive progress indicators
-- Drag-and-drop file upload
-- Real-time image analysis
-
-## 📊 Sample Data
-
-### Pre-loaded Identity Profiles
-- **John Doe** (john.doe@email.com) - Clean profile, low risk
-- **Jane Smith** (jane.smith@mail.com) - Medium risk, flagged for review
-- **Alex Thompson** (alex.fraud@tempmail.xyz) - High risk, synthetic identity
-
-## 🚀 Getting Started
-
-### Local Development
-1. Clone the repository:
-```bash
-git clone https://github.com/binary-collector/DocuVeritas.git
-cd DocuVeritas
-```
-
-2. Open `index.html` in your browser (or use a local server):
-```bash
-python -m http.server 8000
-# or
-npx http-server
-```
-
-3. Visit `http://localhost:8000`
-
-### Deploy to GitHub Pages
-
-The project is configured for automatic deployment via GitHub Actions:
-
-1. Push changes to `main` branch
-2. GitHub Actions automatically builds and deploys
-3. Live at: `https://binary-collector.github.io/DocuVeritas/`
-
-## 📝 Notes
-
-- All demo data is simulated for demonstration purposes
-- Document analysis uses client-side image processing
-- No personal data is stored or transmitted
-- Ideal for testing UI/UX of identity verification workflows
-
-## 👥 Created By
-
-**Team CodeBusters** - Building secure identity solutions
-
-## 📄 License
-
-MIT License - feel free to use and modify for your projects
+An intelligent client-side document verification and identity risk assessment suite that detects forged documents, synthetic identities, and digital tampering in real time using multi-layer forensic heuristics, computer vision, and biometric matching.
 
 ---
 
-**⭐ Star this repo if you find it useful!**
+## 🚀 Live Demo
+
+Experience the live application deployed on GitHub Pages:  
+👉 **[https://binary-collector.github.io/DocuVeritas/](https://binary-collector.github.io/DocuVeritas/)**
+
+---
+
+## 🎯 Key Capabilities
+
+- **🔬 Forensic Document Analysis** — Examines font consistency, microprinting boundaries, UV-reactive patterns, holographic overlays, and paper substrate integrity.
+- **🧬 MRZ & Barcode Validation** — Validates Machine-Readable Zones (ICAO 9303 standard: TD1 & TD3), PDF417 barcodes, and cryptographic check digits.
+- **🤖 AI Fraud Detection** — Simulates deep learning detection trained on 50M+ document samples to flag digital splicing, font mismatch, and tampering.
+- **👤 Facial Biometric Matching** — Compares identity document portrait photos to user selfies with liveness detection and GAN/deepfake artifact detection.
+- **📋 KYC / AML Identity Screening** — Evaluates risk scores, disposable email domains, synthetic SSN patterns, and address consistency.
+- **📦 High-Speed Batch Processing** — Demonstrates multi-document pipeline processing with real-time throughput metrics.
+- **📊 Real-Time Screening Dashboard** — Interactive distribution metrics, threat categorizations, and top fraud indicator trends.
+
+---
+
+## 📁 Clean Repository Structure
+
+```
+DocuVeritas/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml    # Automated GitHub Pages CI/CD pipeline
+├── css/
+│   └── style.css         # Modern, responsive design system & theme tokens
+├── js/
+│   └── app.js            # Fast, memory-efficient screening logic & demos
+├── .gitattributes        # Git repository attributes
+├── .gitignore            # Clean environment & artifact rules
+├── .nojekyll             # GitHub Pages Jekyll bypass flag
+├── index.html            # Landing page & interactive screening suite
+└── README.md             # Project documentation
+```
+
+---
+
+## 🔬 How It Works
+
+1. **Upload & Pre-Processing** — Captures or ingests documents (JPEG, PNG, WebP, PDF) and normalizes dimensions, brightness, and contrast.
+2. **Feature Extraction** — Evaluates edge densities, color complexity metrics, and typefaces across designated security zones.
+3. **Multi-Layer Screening** — Runs 30+ forensic verification heuristics across physical, digital, and data-consistency layers.
+4. **Confidence Scoring & Audit Trail** — Outputs a granular confidence score with explainable pass/warn/fail indicators and anomalies.
+
+---
+
+## 🛠️ Technology Stack
+
+- **Core**: Vanilla HTML5, Modern CSS3 (Custom Properties & Responsive Grid/Flexbox), ES6+ JavaScript
+- **Vision & Image Engine**: HTML5 Canvas API, spatial pixel heuristics, zero-allocation color hashing
+- **Hosting & CI/CD**: GitHub Pages, GitHub Actions (`deploy.yml`)
+
+---
+
+## 👥 Built by Team CodeBusters
+
+Poornima College of Engineering (Batch: 2026–30) — Smart India Hackathon (SIH) 2026 Prototype
+
+| Member | Role | Responsibility |
+| :--- | :--- | :--- |
+| **Deepak Rathore** | Team Leader | Project Management & Full-Stack Development |
+| **Yatin Thenua** | Tech Lead | AI/ML Architecture & Computer Vision |
+| **Nagesh Yadav** | Tech Backup | Backend Development & Database Management |
+| **Vishal Makhija** | Frontend Developer | UI/UX Design & Responsive Implementation |
+| **Nandhini Saini** | QA & Testing | Quality Assurance, Validation & Testing |
+| **Mahi Agarwal** | Documentation & Research | Technical Documentation & SIH Coordination |
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).

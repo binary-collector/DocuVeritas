@@ -1,24 +1,22 @@
-/* ============================================
-   DocuVeritas — Main Application Logic
-   Created by Team CodeBusters
-   ============================================ */
+/**
+ * DocuVeritas — Main Application Logic
+ * AI-Based Fake Identity & Document Screening System
+ * Created by Team CodeBusters (Poornima College of Engineering)
+ */
 
 document.addEventListener('DOMContentLoaded', () => {
+  'use strict';
 
-  // --- Theme Toggle with System Preference ---
+  // --- Theme Management with System Preference & Easter Egg ---
   const themeToggleDesktop = document.getElementById('themeToggle');
   const themeToggleMobile = document.getElementById('themeToggleMobile');
   const themeIconDesktop = themeToggleDesktop ? themeToggleDesktop.querySelector('.theme-icon') : null;
   const themeIconMobile = themeToggleMobile ? themeToggleMobile.querySelector('.theme-icon') : null;
 
-  // Check for saved theme or system preference
   const savedTheme = localStorage.getItem('theme');
-  let prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const initialTheme = savedTheme || (prefersDarkMode ? 'dark' : 'light');
 
-  // Determine initial theme
-  let initialTheme = savedTheme || (prefersDarkMode ? 'dark' : 'light');
-
-  // Apply initial theme
   function applyTheme(isDark) {
     if (isDark) {
       document.body.classList.add('dark-theme');
@@ -33,181 +31,205 @@ document.addEventListener('DOMContentLoaded', () => {
 
   applyTheme(initialTheme === 'dark');
 
-  // Listen for system theme changes
+  // Listen for OS system theme changes (only if user hasn't set manual override)
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
     if (!localStorage.getItem('theme')) {
-      // Only auto-switch if user hasn't manually chosen a theme
       applyTheme(e.matches);
     }
   });
 
-  // Easter egg counter for theme toggles
+  // Easter egg counter: 5 clicks on theme toggle triggers 67 meme
   let themeToggleCount = 0;
   const EASTER_EGG_THRESHOLD = 5;
 
-  // Toggle theme on button click (desktop)
-  if (themeToggleDesktop) {
-    themeToggleDesktop.addEventListener('click', () => {
-      const isDark = document.body.classList.contains('dark-theme');
-      applyTheme(!isDark);
-      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+  function handleThemeToggle() {
+    const isDark = document.body.classList.contains('dark-theme');
+    applyTheme(!isDark);
+    localStorage.setItem('theme', isDark ? 'light' : 'dark');
 
-      // Easter egg logic
-      themeToggleCount++;
-      if (themeToggleCount >= EASTER_EGG_THRESHOLD) {
-        trigger67MemeEasterEgg();
-        themeToggleCount = 0; // Reset after triggering
-      }
-    });
+    themeToggleCount++;
+    if (themeToggleCount >= EASTER_EGG_THRESHOLD) {
+      trigger67MemeEasterEgg();
+      themeToggleCount = 0;
+    }
   }
 
-  // Toggle theme on button click (mobile)
-  if (themeToggleMobile) {
-    themeToggleMobile.addEventListener('click', () => {
-      const isDark = document.body.classList.contains('dark-theme');
-      applyTheme(!isDark);
-      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+  if (themeToggleDesktop) themeToggleDesktop.addEventListener('click', handleThemeToggle);
+  if (themeToggleMobile) themeToggleMobile.addEventListener('click', handleThemeToggle);
 
-      // Easter egg logic
-      themeToggleCount++;
-      if (themeToggleCount >= EASTER_EGG_THRESHOLD) {
-        trigger67MemeEasterEgg();
-        themeToggleCount = 0; // Reset after triggering
-      }
-    });
-  }
-  // --- Navbar scroll effect ---
-  const navbar = document.querySelector('.navbar');
+  // --- Navbar Scroll Effect (Optimized with requestAnimationFrame) ---
+  const navbar = document.getElementById('mainNavbar') || document.querySelector('.navbar');
+  let ticking = false;
+
   window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 50);
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        if (navbar) {
+          navbar.classList.toggle('scrolled', window.scrollY > 40);
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // --- Mobile Hamburger Navigation ---
+  const hamburger = document.getElementById('hamburgerBtn') || document.querySelector('.hamburger');
+  const navLinks = document.getElementById('navLinks') || document.querySelector('.nav-links');
+
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      hamburger.classList.toggle('active', isOpen);
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+    });
+  }
+
+  // --- Smooth Scroll for Anchor Links ---
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const targetId = link.getAttribute('href');
+      if (!targetId || targetId === '#') return;
+
+      const target = document.querySelector(targetId);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (navLinks && navLinks.classList.contains('open')) {
+          navLinks.classList.remove('open');
+          if (hamburger) {
+            hamburger.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
+          }
+        }
+      }
+    });
   });
 
-  // Contact popup functionality
+  // --- Contact Popup Modal ---
   const contactBtn = document.getElementById('contactBtn');
   const contactPopup = document.getElementById('contactPopup');
   const popupClose = document.getElementById('popupClose');
   const contactEmail = document.getElementById('contactEmail');
 
-  if (contactBtn && contactPopup && popupClose && contactEmail) {
-    // Load email from config
-    if (window.CONFIG && window.CONFIG.contactEmail) {
+  if (contactBtn && contactPopup && popupClose) {
+    if (contactEmail && window.CONFIG && window.CONFIG.contactEmail) {
       contactEmail.textContent = window.CONFIG.contactEmail;
     }
 
-    // Open popup
-    contactBtn.addEventListener('click', () => {
+    const openPopup = () => {
       contactPopup.style.display = 'block';
-    });
+      contactPopup.setAttribute('aria-hidden', 'false');
+    };
 
-    // Close popup when clicking X
-    popupClose.addEventListener('click', () => {
+    const closePopup = () => {
       contactPopup.style.display = 'none';
-    });
+      contactPopup.setAttribute('aria-hidden', 'true');
+    };
 
-    // Close popup when clicking outside
+    contactBtn.addEventListener('click', openPopup);
+    popupClose.addEventListener('click', closePopup);
+
     window.addEventListener('click', (e) => {
-      if (e.target === contactPopup) {
-        contactPopup.style.display = 'none';
+      if (e.target === contactPopup) closePopup();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && contactPopup.style.display === 'block') {
+        closePopup();
       }
     });
   }
-  const hamburger = document.querySelector('.hamburger');
-  const navLinks = document.querySelector('.nav-links');
-  if (hamburger) {
-    hamburger.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
-      hamburger.classList.toggle('active');
-    });
-  }
 
-  // --- Smooth scroll for anchor links ---
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const target = document.querySelector(link.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        navLinks.classList.remove('open');
-      }
-    });
-  });
-
-  // --- Scroll animations ---
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
+  // --- Scroll Animations (IntersectionObserver) ---
+  const scrollObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
+        scrollObserver.unobserve(entry.target);
       }
     });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+  document.querySelectorAll('.animate-on-scroll').forEach((el) => scrollObserver.observe(el));
 
-  // --- Counter animation ---
-  function animateCounter(el, target, duration = 2000) {
-    let start = 0;
-    const step = target / (duration / 16);
+  // --- Stat Counters (Smooth Easing & RAF) ---
+  function animateCounter(el, target, duration = 1800) {
+    const startTime = performance.now();
     const suffix = el.dataset.suffix || '';
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= target) {
-        start = target;
-        clearInterval(timer);
+
+    function updateCounter(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(eased * target);
+
+      el.textContent = current.toLocaleString() + suffix;
+
+      if (progress < 1) {
+        requestAnimationFrame(updateCounter);
+      } else {
+        el.textContent = target.toLocaleString() + suffix;
       }
-      el.textContent = Math.floor(start).toLocaleString() + suffix;
-    }, 16);
+    }
+
+    requestAnimationFrame(updateCounter);
   }
 
-  const counterObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting && !entry.target.dataset.counted) {
         entry.target.dataset.counted = 'true';
-        const target = parseInt(entry.target.dataset.target);
-        animateCounter(entry.target, target);
+        const target = parseInt(entry.target.dataset.target, 10);
+        if (!isNaN(target)) {
+          animateCounter(entry.target, target);
+        }
+        counterObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.5 });
+  }, { threshold: 0.4 });
 
-  document.querySelectorAll('[data-counter]').forEach(el => counterObserver.observe(el));
+  document.querySelectorAll('[data-counter]').forEach((el) => counterObserver.observe(el));
 
-  // --- Demo Tabs ---
+  // --- Initialize All Interactive Demo Modules ---
   initDemoTabs();
-
-  // --- Sample Document Screening ---
   initDocumentScreening();
-
-  // --- Identity Verification ---
   initIdentityVerification();
-
-  // --- Face Match Demo ---
   initFaceMatchDemo();
-
-  // --- Batch Processing Demo ---
   initBatchProcessing();
 });
 
 
-/* ==========================================
-   Demo Tab System
-   ========================================== */
+/* ==========================================================================
+   Demo Tab Switching
+   ========================================================================== */
 function initDemoTabs() {
   const tabs = document.querySelectorAll('.demo-tab');
   const panels = document.querySelectorAll('.demo-panel');
 
-  tabs.forEach(tab => {
+  tabs.forEach((tab) => {
     tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      panels.forEach(p => p.classList.remove('active'));
+      const targetPanelId = tab.dataset.panel;
+      tabs.forEach((t) => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      panels.forEach((p) => p.classList.remove('active'));
+
       tab.classList.add('active');
-      document.getElementById(tab.dataset.panel).classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+
+      const panel = document.getElementById(targetPanelId);
+      if (panel) panel.classList.add('active');
     });
   });
 }
 
 
-/* ==========================================
-   Document Screening Engine
-   ========================================== */
+/* ==========================================================================
+   Document Screening Module
+   ========================================================================== */
 const SAMPLE_DOCUMENTS = {
   passport_genuine: {
     name: 'US Passport (Genuine)',
@@ -301,7 +323,7 @@ const SAMPLE_DOCUMENTS = {
       { name: 'UV Pattern Detection', status: 'warn', detail: 'UV bear pattern partially visible — possible wear or alteration' },
       { name: 'Hologram Verification', status: 'pass', detail: 'OVD (optically variable device) present' },
       { name: 'Template Match', status: 'warn', detail: 'Layout matches 2018-style CA DL but minor alignment shift' },
-      { name: 'Age/Date Logic', status: 'fail', detail: 'Issue date precedes holder\'s 16th birthday — impossible' },
+      { name: 'Age/Date Logic', status: 'fail', detail: "Issue date precedes holder's 16th birthday — impossible" },
     ],
     findings: [
       { severity: 'critical', text: 'Issue date (2007-03-15) is before holder turned 16 — CA does not issue DL to minors under 16' },
@@ -310,7 +332,7 @@ const SAMPLE_DOCUMENTS = {
       { severity: 'info', text: 'UV security pattern is partially degraded — could indicate wear or chemical treatment' },
     ],
     metadata: {
-      'Document Type': "Real ID (Class C)",
+      'Document Type': 'Real ID (Class C)',
       'Security Level': 'Level 2 (Medium)',
       'Barcode': 'PDF417 (Partial mismatch)',
       'Template Version': '2018 CA DMV',
@@ -351,19 +373,28 @@ const SAMPLE_DOCUMENTS = {
 };
 
 function initDocumentScreening() {
-  const sampleDocs = document.querySelectorAll('.sample-doc');
-  sampleDocs.forEach(doc => {
-    doc.addEventListener('click', () => {
+  const sampleDocs = document.querySelectorAll('.sample-doc[data-doc]');
+  sampleDocs.forEach((doc) => {
+    const handleSelect = () => {
       const docId = doc.dataset.doc;
       if (SAMPLE_DOCUMENTS[docId]) {
+        sampleDocs.forEach((d) => d.classList.remove('selected'));
+        doc.classList.add('selected');
         runDocumentAnalysis(SAMPLE_DOCUMENTS[docId]);
+      }
+    };
+    doc.addEventListener('click', handleSelect);
+    doc.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleSelect();
       }
     });
   });
 
-  // File upload handling
   const uploadArea = document.getElementById('uploadArea');
   const fileInput = document.getElementById('documentUpload');
+  const chooseFileBtn = document.getElementById('chooseFileBtn');
   const uploadedPreview = document.getElementById('uploadedPreview');
   const uploadedImage = document.getElementById('uploadedImage');
   const clearUploadBtn = document.getElementById('clearUpload');
@@ -371,74 +402,88 @@ function initDocumentScreening() {
 
   if (!uploadArea || !fileInput) return;
 
-  // Drag and drop handlers
-  uploadArea.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    uploadArea.classList.add('dragover');
-  });
-
-  uploadArea.addEventListener('dragleave', () => {
-    uploadArea.classList.remove('dragover');
-  });
-
-  uploadArea.addEventListener('drop', (e) => {
-    e.preventDefault();
-    uploadArea.classList.remove('dragover');
-    const file = e.dataTransfer.files[0];
-    if (file) handleFileUpload(file);
-  });
-
-  // Click to upload
-  uploadArea.addEventListener('click', (e) => {
-    if (e.target === uploadArea || e.target.closest('.upload-icon') || e.target.closest('h4') || e.target.closest('p')) {
+  // Bind choose file button
+  if (chooseFileBtn) {
+    chooseFileBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       fileInput.click();
-    }
-  });
-
-  fileInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file) handleFileUpload(file);
-  });
-
-  // Clear upload
-  if (clearUploadBtn) {
-    clearUploadBtn.addEventListener('click', () => {
-      fileInput.value = '';
-      uploadedPreview.style.display = 'none';
-      uploadArea.style.display = 'block';
-      uploadedImage.src = '';
     });
   }
 
-  // Analyze uploaded document
+  // Drag and drop events
+  ['dragenter', 'dragover'].forEach((eventName) => {
+    uploadArea.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      uploadArea.classList.add('dragover');
+    });
+  });
+
+  ['dragleave', 'drop'].forEach((eventName) => {
+    uploadArea.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      uploadArea.classList.remove('dragover');
+    });
+  });
+
+  uploadArea.addEventListener('drop', (e) => {
+    const dt = e.dataTransfer;
+    if (dt && dt.files && dt.files.length > 0) {
+      handleFileUpload(dt.files[0]);
+    }
+  });
+
+  uploadArea.addEventListener('click', () => {
+    fileInput.click();
+  });
+
+  fileInput.addEventListener('change', (e) => {
+    if (e.target.files && e.target.files[0]) {
+      handleFileUpload(e.target.files[0]);
+    }
+  });
+
+  if (clearUploadBtn) {
+    clearUploadBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      fileInput.value = '';
+      if (uploadedPreview) uploadedPreview.style.display = 'none';
+      if (uploadArea) uploadArea.style.display = 'block';
+      if (uploadedImage) uploadedImage.src = '';
+    });
+  }
+
+  let isAnalyzing = false;
   if (analyzeUploadBtn) {
     analyzeUploadBtn.addEventListener('click', () => {
-      const imgSrc = uploadedImage.src;
-      if (imgSrc) {
-        analyzeUploadedDocument(uploadedImage);
-        // Auto-scroll to results after analysis
+      if (isAnalyzing || !uploadedImage || !uploadedImage.src) return;
+      isAnalyzing = true;
+      analyzeUploadBtn.disabled = true;
+
+      analyzeUploadedDocument(uploadedImage, () => {
+        isAnalyzing = false;
+        analyzeUploadBtn.disabled = false;
         setTimeout(() => {
           const resultsPanel = document.getElementById('docResults');
           if (resultsPanel) {
             resultsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
-        }, 500);
-      }
+        }, 400);
+      });
     });
   }
 }
 
 function handleFileUpload(file) {
-  // Validate file type
   const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'application/pdf'];
   if (!validTypes.includes(file.type)) {
-    alert('Please upload a valid image file (JPG, PNG, GIF, WEBP) or PDF');
+    alert('Please upload a valid image file (JPG, PNG, GIF, WEBP) or PDF.');
     return;
   }
 
-  // Validate file size (10MB)
   if (file.size > 10 * 1024 * 1024) {
-    alert('File size must be less than 10MB');
+    alert('File size exceeds 10MB limit.');
     return;
   }
 
@@ -446,193 +491,189 @@ function handleFileUpload(file) {
   const uploadedPreview = document.getElementById('uploadedPreview');
   const uploadedImage = document.getElementById('uploadedImage');
 
-  // For PDF, show placeholder
   if (file.type === 'application/pdf') {
     uploadedImage.src = 'data:image/svg+xml,' + encodeURIComponent(`
       <svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500">
         <rect width="400" height="500" fill="#f8f9fa"/>
         <text x="200" y="240" text-anchor="middle" font-size="80" fill="#dee2e6">📄</text>
         <text x="200" y="280" text-anchor="middle" font-size="20" fill="#495057" font-family="Arial">PDF Document</text>
-        <text x="200" y="310" text-anchor="middle" font-size="16" fill="#6c757d" font-family="Arial">${file.name}</text>
+        <text x="200" y="310" text-anchor="middle" font-size="15" fill="#6c757d" font-family="Arial">${file.name}</text>
       </svg>
     `);
-    uploadArea.style.display = 'none';
-    uploadedPreview.style.display = 'block';
+    if (uploadArea) uploadArea.style.display = 'none';
+    if (uploadedPreview) uploadedPreview.style.display = 'block';
     return;
   }
 
-  // Read image file
   const reader = new FileReader();
   reader.onload = (e) => {
     uploadedImage.src = e.target.result;
-    uploadArea.style.display = 'none';
-    uploadedPreview.style.display = 'block';
+    if (uploadArea) uploadArea.style.display = 'none';
+    if (uploadedPreview) uploadedPreview.style.display = 'block';
   };
   reader.readAsDataURL(file);
 }
 
-function analyzeUploadedDocument(imgElement) {
-  // Analyze the uploaded image using Canvas API
+/**
+ * High-performance image analysis:
+ * Downscales images to max 600px dimension to prevent freezing on large uploads.
+ * Single-pass pixel metrics and zero-allocation color complexity.
+ */
+function analyzeUploadedDocument(imgElement, onComplete) {
   const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
-
-  // Create a temporary image to ensure it's loaded
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
   const img = new Image();
   img.crossOrigin = 'anonymous';
   img.src = imgElement.src;
 
   img.onload = () => {
-    canvas.width = img.width;
-    canvas.height = img.height;
-    ctx.drawImage(img, 0, 0);
+    const MAX_DIM = 600;
+    let width = img.naturalWidth || img.width;
+    let height = img.naturalHeight || img.height;
 
-    // Perform image analysis
-    const analysisResult = performImageAnalysis(canvas, ctx);
+    if (width > MAX_DIM || height > MAX_DIM) {
+      if (width > height) {
+        height = Math.round((height * MAX_DIM) / width);
+        width = MAX_DIM;
+      } else {
+        width = Math.round((width * MAX_DIM) / height);
+        height = MAX_DIM;
+      }
+    }
 
-    // Run the document analysis with results
-    runDocumentAnalysis(analysisResult);
+    canvas.width = width;
+    canvas.height = height;
+    ctx.drawImage(img, 0, 0, width, height);
+
+    const result = performOptimizedImageAnalysis(canvas, ctx);
+    runDocumentAnalysis(result, onComplete);
   };
 
   img.onerror = () => {
-    // Fallback if image analysis fails
-    const fallbackResult = generateFallbackAnalysis();
-    runDocumentAnalysis(fallbackResult);
+    const fallback = generateFallbackAnalysis();
+    runDocumentAnalysis(fallback, onComplete);
   };
 }
 
-function performImageAnalysis(canvas, ctx) {
+function performOptimizedImageAnalysis(canvas, ctx) {
   try {
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const width = canvas.width;
+    const height = canvas.height;
+    const imageData = ctx.getImageData(0, 0, width, height);
     const pixels = imageData.data;
+    const len = pixels.length;
+    const pixelCount = len / 4;
 
-    // Calculate image quality metrics
-    const sharpness = calculateSharpness(pixels, canvas.width, canvas.height);
-    const brightness = calculateBrightness(pixels);
-    const contrast = calculateContrast(pixels);
-    const colorComplexity = calculateColorComplexity(pixels);
-    const edgeDetection = calculateEdgeDensity(pixels, canvas.width, canvas.height);
+    if (pixelCount === 0) return generateFallbackAnalysis();
 
-    // Generate realistic score based on image characteristics
-    let baseScore = 50;
+    // 1. Single pass: Brightness, Sharpness & Color Complexity
+    let brightnessSum = 0;
+    let sharpnessSum = 0;
+    let sharpnessCount = 0;
 
-    // Good sharpness increases score
+    // 12-bit color bucket (4-bit R, 4-bit G, 4-bit B = 4096 bins, 0 GC allocations)
+    const colorBuckets = new Uint8Array(4096);
+    let uniqueColorCount = 0;
+
+    for (let i = 0; i < len; i += 4) {
+      const r = pixels[i];
+      const g = pixels[i + 1];
+      const b = pixels[i + 2];
+      const lum = (r + g + b) / 3;
+      brightnessSum += lum;
+
+      // Sample every 8th pixel for color complexity
+      if (i % 32 === 0) {
+        const bin = ((r >> 4) << 8) | ((g >> 4) << 4) | (b >> 4);
+        if (colorBuckets[bin] === 0) {
+          colorBuckets[bin] = 1;
+          uniqueColorCount++;
+        }
+      }
+    }
+
+    const brightness = brightnessSum / pixelCount;
+
+    // 2. Second pass: Contrast
+    let varianceSum = 0;
+    for (let i = 0; i < len; i += 4) {
+      const lum = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
+      const diff = lum - brightness;
+      varianceSum += diff * diff;
+    }
+    const contrast = Math.sqrt(varianceSum / pixelCount);
+
+    // 3. Sharpness calculation with step-sampling for performance
+    const step = 2;
+    for (let y = 1; y < height - 1; y += step) {
+      const rowOffset = y * width * 4;
+      const nextRowOffset = (y + step) * width * 4;
+      for (let x = 1; x < width - 1; x += step) {
+        const i = rowOffset + x * 4;
+        const current = pixels[i];
+        const right = pixels[i + step * 4];
+        const down = pixels[nextRowOffset + x * 4];
+
+        sharpnessSum += Math.abs(current - right) + Math.abs(current - down);
+        sharpnessCount++;
+      }
+    }
+    const sharpness = sharpnessCount > 0 ? (sharpnessSum / sharpnessCount / 255) : 0;
+
+    // 4. Edge density estimation
+    let edges = 0;
+    let edgeTests = 0;
+    const threshold = 30;
+    for (let y = 1; y < height - 1; y += 4) {
+      const rowOffset = y * width * 4;
+      const downOffset = (y + 2) * width * 4;
+      for (let x = 1; x < width - 1; x += 4) {
+        const i = rowOffset + x * 4;
+        const current = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
+        const right = (pixels[i + 8] + pixels[i + 9] + pixels[i + 10]) / 3;
+        const down = (pixels[downOffset + x * 4] + pixels[downOffset + x * 4 + 1] + pixels[downOffset + x * 4 + 2]) / 3;
+
+        if (Math.abs(current - right) > threshold || Math.abs(current - down) > threshold) {
+          edges++;
+        }
+        edgeTests++;
+      }
+    }
+    const edgeDetection = edgeTests > 0 ? (edges / edgeTests) : 0;
+
+    // Base score computation
+    let baseScore = 52;
     if (sharpness > 0.3) baseScore += 15;
     else if (sharpness < 0.1) baseScore -= 10;
 
-    // Proper brightness increases score
     if (brightness > 80 && brightness < 180) baseScore += 10;
-    else baseScore -= 5;
+    else baseScore -= 6;
 
-    // Good contrast increases score
     if (contrast > 40) baseScore += 10;
     else if (contrast < 20) baseScore -= 8;
 
-    // Complex images (likely real documents) score higher
-    if (colorComplexity > 5000) baseScore += 15;
-    else baseScore -= 5;
+    if (uniqueColorCount > 1800) baseScore += 14;
+    else if (uniqueColorCount < 400) baseScore -= 8;
 
-    // Edge density (text, security features)
-    if (edgeDetection > 0.15 && edgeDetection < 0.4) baseScore += 12;
+    if (edgeDetection > 0.15 && edgeDetection < 0.45) baseScore += 12;
 
-    // Random variation for realism
-    baseScore += Math.random() * 10 - 5;
-    baseScore = Math.max(10, Math.min(98, Math.floor(baseScore)));
+    baseScore = Math.max(12, Math.min(97, Math.floor(baseScore)));
 
-    // Determine verdict
     let verdict = 'authentic';
     if (baseScore < 40) verdict = 'fraudulent';
     else if (baseScore < 70) verdict = 'suspicious';
 
-    // Generate detailed analysis
     return generateDetailedAnalysis(baseScore, verdict, {
       sharpness,
       brightness,
       contrast,
-      colorComplexity,
+      colorComplexity: uniqueColorCount * 3,
       edgeDetection
     });
-
-  } catch (error) {
-    console.error('Analysis error:', error);
+  } catch (err) {
+    console.error('Image analysis error:', err);
     return generateFallbackAnalysis();
   }
-}
-
-function calculateSharpness(pixels, width, height) {
-  let sharpness = 0;
-  let count = 0;
-
-  for (let y = 1; y < height - 1; y++) {
-    for (let x = 1; x < width - 1; x++) {
-      const i = (y * width + x) * 4;
-      const current = pixels[i];
-      const right = pixels[i + 4];
-      const down = pixels[i + width * 4];
-
-      sharpness += Math.abs(current - right) + Math.abs(current - down);
-      count++;
-    }
-  }
-
-  return count > 0 ? sharpness / count / 255 : 0;
-}
-
-function calculateBrightness(pixels) {
-  let sum = 0;
-  for (let i = 0; i < pixels.length; i += 4) {
-    sum += (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
-  }
-  return sum / (pixels.length / 4);
-}
-
-function calculateContrast(pixels) {
-  const brightness = calculateBrightness(pixels);
-  let variance = 0;
-
-  for (let i = 0; i < pixels.length; i += 4) {
-    const gray = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
-    variance += Math.pow(gray - brightness, 2);
-  }
-
-  return Math.sqrt(variance / (pixels.length / 4));
-}
-
-function calculateColorComplexity(pixels) {
-  const colorMap = new Map();
-
-  for (let i = 0; i < pixels.length; i += 4) {
-    // Sample every 10th pixel for performance
-    if (i % 40 !== 0) continue;
-
-    const r = Math.floor(pixels[i] / 16);
-    const g = Math.floor(pixels[i + 1] / 16);
-    const b = Math.floor(pixels[i + 2] / 16);
-    const key = `${r}-${g}-${b}`;
-
-    colorMap.set(key, (colorMap.get(key) || 0) + 1);
-  }
-
-  return colorMap.size;
-}
-
-function calculateEdgeDensity(pixels, width, height) {
-  let edges = 0;
-  const threshold = 30;
-
-  for (let y = 1; y < height - 1; y += 2) {
-    for (let x = 1; x < width - 1; x += 2) {
-      const i = (y * width + x) * 4;
-      const current = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
-      const right = (pixels[i + 4] + pixels[i + 5] + pixels[i + 6]) / 3;
-      const down = (pixels[i + width * 4] + pixels[i + width * 4 + 1] + pixels[i + width * 4 + 2]) / 3;
-
-      if (Math.abs(current - right) > threshold || Math.abs(current - down) > threshold) {
-        edges++;
-      }
-    }
-  }
-
-  return edges / ((width / 2) * (height / 2));
 }
 
 function generateDetailedAnalysis(score, verdict, metrics) {
@@ -643,7 +684,7 @@ function generateDetailedAnalysis(score, verdict, metrics) {
   if (metrics.edgeDetection > 0.2) {
     checks.push({ name: 'MRZ Code Validation', status: 'pass', detail: 'Machine-readable zone structure detected' });
   } else {
-    checks.push({ name: 'MRZ Code Validation', status: 'warn', detail: 'MRZ zone not clearly visible — enhance image quality' });
+    checks.push({ name: 'MRZ Code Validation', status: 'warn', detail: 'MRZ zone not clearly visible — enhance scan quality' });
     findings.push({ severity: 'warning', text: 'MRZ zone unclear — recommend higher resolution scan' });
   }
 
@@ -651,12 +692,12 @@ function generateDetailedAnalysis(score, verdict, metrics) {
   if (score > 70) {
     checks.push({ name: 'Font Consistency', status: 'pass', detail: 'Text rendering consistent with genuine documents' });
   } else {
-    checks.push({ name: 'Font Consistency', status: 'warn', detail: 'Font irregularities detected' });
+    checks.push({ name: 'Font Consistency', status: 'warn', detail: 'Typeface analysis shows minor irregularities' });
     findings.push({ severity: 'warning', text: 'Typeface analysis shows minor inconsistencies' });
   }
 
   // Photo Integration
-  if (metrics.colorComplexity > 4000 && metrics.contrast > 30) {
+  if (metrics.colorComplexity > 3500 && metrics.contrast > 30) {
     checks.push({ name: 'Photo Integration', status: 'pass', detail: 'Photo shows proper bonding and alignment' });
   } else if (verdict === 'fraudulent') {
     checks.push({ name: 'Photo Integration', status: 'fail', detail: 'Photo edges show potential digital manipulation' });
@@ -670,7 +711,7 @@ function generateDetailedAnalysis(score, verdict, metrics) {
     checks.push({ name: 'Image Quality', status: 'pass', detail: 'High resolution image suitable for analysis' });
   } else {
     checks.push({ name: 'Image Quality', status: 'warn', detail: 'Image resolution lower than optimal' });
-    findings.push({ severity: 'info', text: 'Low image sharpness — recommend rescanning at higher DPI (300+)' });
+    findings.push({ severity: 'info', text: 'Low image sharpness — recommend rescanning at 300+ DPI' });
   }
 
   // Lighting
@@ -678,11 +719,11 @@ function generateDetailedAnalysis(score, verdict, metrics) {
     checks.push({ name: 'Lighting Analysis', status: 'pass', detail: 'Proper illumination for feature detection' });
   } else {
     checks.push({ name: 'Lighting Analysis', status: 'warn', detail: 'Lighting conditions suboptimal' });
-    findings.push({ severity: 'info', text: metrics.brightness < 80 ? 'Image too dark — may miss security features' : 'Image overexposed — may wash out details' });
+    findings.push({ severity: 'info', text: metrics.brightness < 80 ? 'Image too dark — may miss security features' : 'Image overexposed — details washed out' });
   }
 
-  // Security Features (simulated based on complexity)
-  if (metrics.colorComplexity > 6000 && score > 65) {
+  // Security Features
+  if (metrics.colorComplexity > 5000 && score > 65) {
     checks.push({ name: 'Security Features', status: 'pass', detail: 'Complex patterns consistent with security printing' });
   } else if (verdict === 'fraudulent') {
     checks.push({ name: 'Security Features', status: 'fail', detail: 'Expected security features not detected' });
@@ -691,7 +732,7 @@ function generateDetailedAnalysis(score, verdict, metrics) {
     checks.push({ name: 'Security Features', status: 'warn', detail: 'Some security features unclear — image quality issue' });
   }
 
-  // Overall AI verdict
+  // AI Fraud Detection
   if (verdict === 'authentic') {
     checks.push({ name: 'AI Fraud Detection', status: 'pass', detail: 'No manipulation patterns detected' });
   } else if (verdict === 'fraudulent') {
@@ -720,24 +761,24 @@ function generateDetailedAnalysis(score, verdict, metrics) {
       documentNumber: 'Analysis ID: ' + Date.now().toString(36).toUpperCase(),
       dateOfBirth: 'Not extracted',
       expiryDate: 'Not extracted',
-      issuingCountry: 'Auto-detection: Analyzing...',
+      issuingCountry: 'Auto-detection: Completed',
       mrzValid: metrics.edgeDetection > 0.2,
     },
     checks: checks,
     findings: findings,
     metadata: {
-      'Image Resolution': `${Math.floor(metrics.sharpness * 1000)} quality units`,
+      'Image Quality': `${Math.floor(metrics.sharpness * 1000)} units`,
       'Brightness': `${Math.floor(metrics.brightness)}/255`,
       'Contrast': `${Math.floor(metrics.contrast)} units`,
-      'Color Complexity': `${metrics.colorComplexity} unique colors`,
+      'Color Palette': `${metrics.colorComplexity} unique shades`,
       'Edge Density': `${(metrics.edgeDetection * 100).toFixed(1)}%`,
-      'Analysis Confidence': `${score}%`,
+      'Confidence': `${score}%`,
     }
   };
 }
 
 function generateFallbackAnalysis() {
-  const score = Math.floor(Math.random() * 30) + 50;
+  const score = Math.floor(Math.random() * 25) + 60;
   const verdict = score > 70 ? 'authentic' : 'suspicious';
 
   return {
@@ -751,14 +792,14 @@ function generateFallbackAnalysis() {
       documentNumber: 'Analysis ID: ' + Date.now().toString(36).toUpperCase(),
       dateOfBirth: 'Not extracted',
       expiryDate: 'Not extracted',
-      issuingCountry: 'Detection: Processing...',
+      issuingCountry: 'Detection: Completed',
       mrzValid: false,
     },
     checks: [
       { name: 'Image Upload', status: 'pass', detail: 'Document image successfully processed' },
-      { name: 'Basic Validation', status: 'pass', detail: 'Format validated' },
+      { name: 'Basic Validation', status: 'pass', detail: 'Format validated per standard specs' },
       { name: 'Advanced Analysis', status: 'warn', detail: 'Some features require higher resolution image' },
-      { name: 'AI Processing', status: 'warn', detail: 'Partial analysis completed' },
+      { name: 'AI Processing', status: 'warn', detail: 'Partial heuristic analysis completed' },
     ],
     findings: [
       { severity: 'info', text: 'Document uploaded successfully — basic validation complete' },
@@ -772,128 +813,173 @@ function generateFallbackAnalysis() {
   };
 }
 
-function runDocumentAnalysis(doc) {
+let activeAnalysisTimer = null;
+
+function runDocumentAnalysis(doc, onComplete) {
   const resultsPanel = document.getElementById('docResults');
   const progressContainer = document.getElementById('docProgress');
+  if (!resultsPanel || !progressContainer) return;
 
-  // Hide results, show progress
+  if (activeAnalysisTimer) {
+    clearTimeout(activeAnalysisTimer);
+    activeAnalysisTimer = null;
+  }
+
   resultsPanel.classList.remove('active');
   progressContainer.classList.add('active');
 
   const progressFill = progressContainer.querySelector('.progress-fill');
   const progressSteps = progressContainer.querySelectorAll('.progress-step');
 
-  const analysisSteps = [
-    { progress: 15, step: 0, label: 'Extracting document data...' },
-    { progress: 35, step: 1, label: 'Validating MRZ/barcodes...' },
-    { progress: 55, step: 2, label: 'Analyzing security features...' },
-    { progress: 75, step: 3, label: 'Running AI fraud detection...' },
-    { progress: 90, step: 4, label: 'Generating report...' },
-    { progress: 100, step: 5, label: 'Complete' },
+  const steps = [
+    { progress: 15, step: 0 },
+    { progress: 35, step: 1 },
+    { progress: 55, step: 2 },
+    { progress: 75, step: 3 },
+    { progress: 90, step: 4 },
+    { progress: 100, step: 5 },
   ];
 
-  let stepIndex = 0;
+  let stepIdx = 0;
 
-  function advanceStep() {
-    if (stepIndex >= analysisSteps.length) {
-      setTimeout(() => {
+  function advance() {
+    if (stepIdx >= steps.length) {
+      activeAnalysisTimer = setTimeout(() => {
         progressContainer.classList.remove('active');
         displayDocResults(doc, resultsPanel);
-      }, 400);
+        if (typeof onComplete === 'function') onComplete();
+      }, 350);
       return;
     }
 
-    const s = analysisSteps[stepIndex];
-    progressFill.style.width = s.progress + '%';
+    const cur = steps[stepIdx];
+    if (progressFill) progressFill.style.width = cur.progress + '%';
 
-    progressSteps.forEach((ps, i) => {
-      ps.classList.remove('active');
-      if (i < s.step) ps.classList.add('done');
-      if (i === s.step) ps.classList.add('active');
-    });
+    if (progressSteps) {
+      progressSteps.forEach((ps, i) => {
+        ps.classList.remove('active');
+        if (i < cur.step) ps.classList.add('done');
+        if (i === cur.step) ps.classList.add('active');
+      });
+    }
 
-    stepIndex++;
-    setTimeout(advanceStep, 500 + Math.random() * 400);
+    stepIdx++;
+    activeAnalysisTimer = setTimeout(advance, 350 + Math.random() * 200);
   }
 
-  advanceStep();
+  advance();
 }
 
 function displayDocResults(doc, container) {
   container.classList.add('active');
 
-  // Status indicator
   const statusIcon = container.querySelector('.status-indicator');
   const statusTitle = container.querySelector('.status-title');
   const statusDesc = container.querySelector('.status-desc');
+  const resultBadge = container.querySelector('.result-badge');
 
-  statusIcon.className = 'status-indicator ' + doc.verdict;
-  statusIcon.textContent = doc.verdict === 'authentic' ? '✓' : doc.verdict === 'suspicious' ? '⚠' : '✕';
-  statusTitle.textContent = doc.verdict === 'authentic' ? 'Document Authentic' :
-                            doc.verdict === 'suspicious' ? 'Suspicious Document' : 'Fraudulent Document';
-  statusDesc.textContent = `Confidence Score: ${doc.score}%`;
+  if (statusIcon) {
+    statusIcon.className = 'status-indicator ' + doc.verdict;
+    statusIcon.textContent = doc.verdict === 'authentic' ? '✓' : doc.verdict === 'suspicious' ? '⚠' : '✕';
+  }
 
-  // Score gauge
+  if (statusTitle) {
+    statusTitle.textContent = doc.verdict === 'authentic' ? 'Document Authentic' :
+                              doc.verdict === 'suspicious' ? 'Suspicious Document' : 'Fraudulent Document';
+  }
+
+  if (statusDesc) {
+    statusDesc.textContent = `Confidence Score: ${doc.score}%`;
+  }
+
+  if (resultBadge) {
+    resultBadge.className = 'badge ' + (
+      doc.verdict === 'authentic' ? 'badge-success' :
+      doc.verdict === 'suspicious' ? 'badge-warning' : 'badge-danger'
+    );
+    resultBadge.textContent = doc.verdict === 'authentic' ? 'VERIFIED' :
+                              doc.verdict === 'suspicious' ? 'FLAGGED' : 'REJECTED';
+  }
+
+  // Score gauge SVG
   const gaugeValue = container.querySelector('.gauge-value');
   const gaugeCircle = container.querySelector('.gauge-track');
-  const gaugeInfo = container.querySelector('.gauge-details');
+  const gaugeDetails = container.querySelector('.gauge-details');
 
-  gaugeValue.textContent = doc.score + '%';
-  gaugeValue.style.color = doc.verdict === 'authentic' ? 'var(--success)' :
-                           doc.verdict === 'suspicious' ? 'var(--warning)' : 'var(--danger)';
+  const strokeColor = doc.verdict === 'authentic' ? '#27ae60' :
+                      doc.verdict === 'suspicious' ? '#f39c12' : '#e74c3c';
 
-  const circumference = 2 * Math.PI * 50;
-  const offset = circumference - (doc.score / 100) * circumference;
-  gaugeCircle.style.strokeDasharray = circumference;
-  gaugeCircle.style.strokeDashoffset = offset;
-  gaugeCircle.style.stroke = doc.verdict === 'authentic' ? '#27ae60' :
-                             doc.verdict === 'suspicious' ? '#f39c12' : '#e74c3c';
+  if (gaugeValue) {
+    gaugeValue.textContent = doc.score + '%';
+    gaugeValue.style.color = strokeColor;
+  }
 
-  gaugeInfo.querySelector('h4').textContent = doc.details.holderName;
-  gaugeInfo.querySelector('p').textContent = `${doc.details.issuingCountry} — ${doc.details.documentNumber}`;
+  if (gaugeCircle) {
+    const circumference = 2 * Math.PI * 50;
+    const offset = circumference - (doc.score / 100) * circumference;
+    gaugeCircle.style.strokeDasharray = circumference;
+    gaugeCircle.style.strokeDashoffset = offset;
+    gaugeCircle.style.stroke = strokeColor;
+  }
+
+  if (gaugeDetails) {
+    const nameEl = gaugeDetails.querySelector('h4');
+    const subEl = gaugeDetails.querySelector('p');
+    if (nameEl) nameEl.textContent = doc.details.holderName;
+    if (subEl) subEl.textContent = `${doc.details.issuingCountry} — ${doc.details.documentNumber}`;
+  }
 
   // Checks grid
   const checksGrid = container.querySelector('.checks-grid');
-  checksGrid.innerHTML = doc.checks.map(c => `
-    <div class="check-item">
-      <div class="check-icon ${c.status}">
-        ${c.status === 'pass' ? '✓' : c.status === 'fail' ? '✕' : '!'}
+  if (checksGrid) {
+    checksGrid.innerHTML = doc.checks.map((c) => `
+      <div class="check-item">
+        <div class="check-icon ${c.status}">
+          ${c.status === 'pass' ? '✓' : c.status === 'fail' ? '✕' : '!'}
+        </div>
+        <div>
+          <strong>${c.name}</strong>
+          <div class="check-item-detail">${c.detail}</div>
+        </div>
       </div>
-      <div>
-        <strong>${c.name}</strong>
-        <div style="font-size:0.8rem;color:var(--gray-500);margin-top:2px">${c.detail}</div>
-      </div>
-    </div>
-  `).join('');
+    `).join('');
+  }
 
   // Findings
   const findingsSection = container.querySelector('.findings-section');
-  if (doc.findings.length > 0) {
-    findingsSection.style.display = 'block';
-    findingsSection.querySelector('.findings-list').innerHTML = doc.findings.map(f => `
-      <div class="finding-item ${f.severity === 'warning' ? 'warning' : f.severity === 'info' ? 'info' : ''}">
-        <span>${f.severity === 'critical' ? '🔴' : f.severity === 'warning' ? '🟡' : '🔵'}</span>
-        <span>${f.text}</span>
-      </div>
-    `).join('');
-  } else {
-    findingsSection.style.display = 'none';
+  if (findingsSection) {
+    if (doc.findings && doc.findings.length > 0) {
+      findingsSection.style.display = 'block';
+      const findingsList = findingsSection.querySelector('.findings-list');
+      if (findingsList) {
+        findingsList.innerHTML = doc.findings.map((f) => `
+          <div class="finding-item ${f.severity === 'warning' ? 'warning' : f.severity === 'info' ? 'info' : ''}">
+            <span>${f.severity === 'critical' ? '🔴' : f.severity === 'warning' ? '🟡' : '🔵'}</span>
+            <span>${f.text}</span>
+          </div>
+        `).join('');
+      }
+    } else {
+      findingsSection.style.display = 'none';
+    }
   }
 
-  // Metadata
+  // Metadata grid
   const metadataGrid = container.querySelector('.metadata-grid');
-  metadataGrid.innerHTML = Object.entries(doc.metadata).map(([key, val]) => `
-    <div class="metadata-item">
-      <div class="meta-label">${key}</div>
-      <div class="meta-value">${val}</div>
-    </div>
-  `).join('');
+  if (metadataGrid) {
+    metadataGrid.innerHTML = Object.entries(doc.metadata).map(([key, val]) => `
+      <div class="metadata-item">
+        <div class="meta-label">${key}</div>
+        <div class="meta-value">${val}</div>
+      </div>
+    `).join('');
+  }
 }
 
 
-/* ==========================================
-   Identity Verification Engine
-   ========================================== */
+/* ==========================================================================
+   Identity Verification Module
+   ========================================================================== */
 const IDENTITY_DATABASE = {
   'john.doe@email.com': {
     name: 'John Doe',
@@ -959,44 +1045,62 @@ function initIdentityVerification() {
   const form = document.getElementById('identityForm');
   if (!form) return;
 
-  // Pre-fill buttons
-  document.querySelectorAll('.prefill-btn').forEach(btn => {
+  const prefillButtons = document.querySelectorAll('.prefill-btn');
+  prefillButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
-      const profile = IDENTITY_DATABASE[btn.dataset.email];
+      const email = btn.dataset.email;
+      const profile = IDENTITY_DATABASE[email];
       if (profile) {
-        document.getElementById('idName').value = profile.name;
-        document.getElementById('idEmail').value = profile.email;
-        document.getElementById('idPhone').value = profile.phone;
-        document.getElementById('idSSN').value = profile.ssn_last4;
-        document.getElementById('idDOB').value = profile.dob;
-        document.getElementById('idAddress').value = profile.address;
+        const idName = document.getElementById('idName');
+        const idEmail = document.getElementById('idEmail');
+        const idPhone = document.getElementById('idPhone');
+        const idSSN = document.getElementById('idSSN');
+        const idDOB = document.getElementById('idDOB');
+        const idAddress = document.getElementById('idAddress');
+
+        if (idName) idName.value = profile.name;
+        if (idEmail) idEmail.value = profile.email;
+        if (idPhone) idPhone.value = profile.phone;
+        if (idSSN) idSSN.value = profile.ssn_last4;
+        if (idDOB) idDOB.value = profile.dob;
+        if (idAddress) idAddress.value = profile.address;
       }
     });
   });
 
-  form.addEventListener('submit', e => {
+  let isChecking = false;
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const email = document.getElementById('idEmail').value.trim();
-    const profile = IDENTITY_DATABASE[email];
+    if (isChecking) return;
+    isChecking = true;
 
-    if (profile) {
-      runIdentityCheck(profile);
-    } else {
-      runIdentityCheck(generateRandomProfile(email));
-    }
+    const emailInput = document.getElementById('idEmail');
+    const email = emailInput ? emailInput.value.trim() : '';
+    const profile = IDENTITY_DATABASE[email] || generateRandomProfile(email);
+
+    const submitBtn = document.getElementById('runIdentityBtn');
+    if (submitBtn) submitBtn.disabled = true;
+
+    runIdentityCheck(profile, () => {
+      isChecking = false;
+      if (submitBtn) submitBtn.disabled = false;
+    });
   });
 }
 
 function generateRandomProfile(email) {
+  const nameInput = document.getElementById('idName');
+  const phoneInput = document.getElementById('idPhone');
   const score = Math.floor(Math.random() * 40) + 55;
+
   return {
-    name: document.getElementById('idName').value || 'Unknown',
-    email: email,
-    phone: document.getElementById('idPhone').value || 'N/A',
+    name: (nameInput && nameInput.value.trim()) || 'Unknown User',
+    email: email || 'user@example.com',
+    phone: (phoneInput && phoneInput.value.trim()) || 'N/A',
     risk: score > 75 ? 'low' : score > 45 ? 'medium' : 'high',
     score: score,
     flags: [
-      'Unable to cross-reference identity — not in verification database',
+      'Unable to cross-reference identity — not in cached verification database',
       'Manual review recommended for first-time verification',
     ],
     history: [
@@ -1005,69 +1109,83 @@ function generateRandomProfile(email) {
   };
 }
 
-function runIdentityCheck(profile) {
+function runIdentityCheck(profile, onComplete) {
   const progress = document.getElementById('idProgress');
   const results = document.getElementById('idResults');
+  if (!progress || !results) return;
+
   results.classList.remove('active');
   progress.classList.add('active');
 
   const fill = progress.querySelector('.progress-fill');
-  const steps = [20, 40, 60, 80, 100];
+  const steps = [20, 45, 70, 90, 100];
   let i = 0;
 
   const interval = setInterval(() => {
-    fill.style.width = steps[i] + '%';
+    if (fill) fill.style.width = steps[i] + '%';
     i++;
     if (i >= steps.length) {
       clearInterval(interval);
       setTimeout(() => {
         progress.classList.remove('active');
         displayIdentityResults(profile, results);
+        if (typeof onComplete === 'function') onComplete();
       }, 300);
     }
-  }, 500);
+  }, 280);
 }
 
 function displayIdentityResults(profile, container) {
   container.classList.add('active');
 
   const riskBadge = container.querySelector('.risk-badge');
-  riskBadge.className = 'badge risk-badge ' +
-    (profile.risk === 'low' ? 'badge-success' : profile.risk === 'medium' ? 'badge-warning' : 'badge-danger');
-  riskBadge.textContent = profile.risk.toUpperCase() + ' RISK';
-
-  container.querySelector('.id-score').textContent = profile.score + '%';
-  container.querySelector('.id-score').style.color =
-    profile.risk === 'low' ? 'var(--success)' : profile.risk === 'medium' ? 'var(--warning)' : 'var(--danger)';
-
-  container.querySelector('.id-name').textContent = profile.name;
-  container.querySelector('.id-email').textContent = profile.email;
-
-  // Flags
-  const flagsList = container.querySelector('.id-flags');
-  if (profile.flags && profile.flags.length > 0) {
-    flagsList.innerHTML = profile.flags.map(f => `
-      <div class="finding-item warning">
-        <span>⚠️</span>
-        <span>${f}</span>
-      </div>
-    `).join('');
-    flagsList.parentElement.style.display = 'block';
-  } else {
-    flagsList.parentElement.style.display = 'none';
+  if (riskBadge) {
+    riskBadge.className = 'badge risk-badge ' + (
+      profile.risk === 'low' ? 'badge-success' :
+      profile.risk === 'medium' ? 'badge-warning' : 'badge-danger'
+    );
+    riskBadge.textContent = profile.risk.toUpperCase() + ' RISK';
   }
 
-  // History
+  const scoreEl = container.querySelector('.id-score');
+  if (scoreEl) {
+    scoreEl.textContent = profile.score + '%';
+    scoreEl.style.color = profile.risk === 'low' ? 'var(--success)' :
+                          profile.risk === 'medium' ? 'var(--warning)' : 'var(--danger)';
+  }
+
+  const nameEl = container.querySelector('.id-name');
+  const emailEl = container.querySelector('.id-email');
+  if (nameEl) nameEl.textContent = profile.name;
+  if (emailEl) emailEl.textContent = profile.email;
+
+  // Risk flags
+  const flagsList = container.querySelector('.id-flags');
+  if (flagsList) {
+    if (profile.flags && profile.flags.length > 0) {
+      flagsList.innerHTML = profile.flags.map((f) => `
+        <div class="finding-item warning">
+          <span>⚠️</span>
+          <span>${f}</span>
+        </div>
+      `).join('');
+      flagsList.parentElement.style.display = 'block';
+    } else {
+      flagsList.parentElement.style.display = 'none';
+    }
+  }
+
+  // History list
   const historyList = container.querySelector('.id-history');
-  if (profile.history) {
-    historyList.innerHTML = profile.history.map(h => `
+  if (historyList && profile.history) {
+    historyList.innerHTML = profile.history.map((h) => `
       <div class="check-item">
         <div class="check-icon ${h.status === 'pass' ? 'pass' : h.status === 'fail' ? 'fail' : 'warn'}">
           ${h.status === 'pass' ? '✓' : h.status === 'fail' ? '✕' : '!'}
         </div>
         <div>
           <strong>${h.event}</strong>
-          <div style="font-size:0.78rem;color:var(--gray-500)">${h.date}</div>
+          <div class="check-item-detail">${h.date}</div>
         </div>
       </div>
     `).join('');
@@ -1075,54 +1193,74 @@ function displayIdentityResults(profile, container) {
 }
 
 
-/* ==========================================
-   Face Match Demo
-   ========================================== */
+/* ==========================================================================
+   Face Match Demo Module
+   ========================================================================== */
 function initFaceMatchDemo() {
   const runBtn = document.getElementById('runFaceMatch');
   if (!runBtn) return;
 
-  document.querySelectorAll('.face-scenario').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.face-scenario').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
+  const scenarios = document.querySelectorAll('.face-scenario');
+  scenarios.forEach((card) => {
+    const selectCard = () => {
+      scenarios.forEach((b) => b.classList.remove('selected'));
+      card.classList.add('selected');
+    };
+    card.addEventListener('click', selectCard);
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        selectCard();
+      }
     });
   });
 
+  // Default to first scenario if none selected
+  if (scenarios.length > 0 && !document.querySelector('.face-scenario.selected')) {
+    scenarios[0].classList.add('selected');
+  }
+
+  let isComparing = false;
   runBtn.addEventListener('click', () => {
+    if (isComparing) return;
     const selected = document.querySelector('.face-scenario.selected');
     if (!selected) return;
+
+    isComparing = true;
+    runBtn.disabled = true;
 
     const scenario = selected.dataset.scenario;
     const resultsEl = document.getElementById('faceResults');
     const progressEl = document.getElementById('faceProgress');
 
-    resultsEl.classList.remove('active');
-    progressEl.classList.add('active');
+    if (resultsEl) resultsEl.classList.remove('active');
+    if (progressEl) progressEl.classList.add('active');
 
-    const fill = progressEl.querySelector('.progress-fill');
+    const fill = progressEl ? progressEl.querySelector('.progress-fill') : null;
     let progress = 0;
 
     const interval = setInterval(() => {
-      progress += Math.random() * 20 + 5;
+      progress += Math.floor(Math.random() * 25) + 15;
       if (progress > 100) progress = 100;
-      fill.style.width = progress + '%';
+      if (fill) fill.style.width = progress + '%';
 
       if (progress >= 100) {
         clearInterval(interval);
         setTimeout(() => {
-          progressEl.classList.remove('active');
-          displayFaceResults(scenario, resultsEl);
+          if (progressEl) progressEl.classList.remove('active');
+          if (resultsEl) displayFaceResults(scenario, resultsEl);
+          isComparing = false;
+          runBtn.disabled = false;
         }, 300);
       }
-    }, 300);
+    }, 220);
   });
 }
 
 function displayFaceResults(scenario, container) {
   container.classList.add('active');
 
-  const scenarios = {
+  const scenarioData = {
     match: {
       score: 98.7,
       verdict: 'MATCH',
@@ -1164,163 +1302,179 @@ function displayFaceResults(scenario, container) {
     }
   };
 
-  const data = scenarios[scenario];
+  const data = scenarioData[scenario] || scenarioData.match;
 
-  container.querySelector('.face-verdict').textContent = data.verdict;
-  container.querySelector('.face-verdict').style.color = data.color;
-  container.querySelector('.face-score-val').textContent = data.score + '%';
-  container.querySelector('.face-score-val').style.color = data.color;
-  container.querySelector('.face-badge').className = 'badge face-badge ' + data.badgeClass;
-  container.querySelector('.face-badge').textContent = data.verdict;
+  const verdictEl = container.querySelector('.face-verdict');
+  const scoreValEl = container.querySelector('.face-score-val');
+  const badgeEl = container.querySelector('.face-badge');
+  const detailsEl = container.querySelector('.face-details');
 
-  container.querySelector('.face-details').innerHTML = data.details.map(d => `
-    <div class="check-item">
-      <div class="check-icon ${d.pass ? 'pass' : 'fail'}">${d.pass ? '✓' : '✕'}</div>
-      <div>
-        <strong>${d.label}</strong>
-        <div style="font-size:0.8rem;color:var(--gray-500)">${d.value}</div>
+  if (verdictEl) {
+    verdictEl.textContent = data.verdict;
+    verdictEl.style.color = data.color;
+  }
+
+  if (scoreValEl) {
+    scoreValEl.textContent = data.score + '%';
+    scoreValEl.style.color = data.color;
+  }
+
+  if (badgeEl) {
+    badgeEl.className = 'badge face-badge ' + data.badgeClass;
+    badgeEl.textContent = data.verdict;
+  }
+
+  if (detailsEl) {
+    detailsEl.innerHTML = data.details.map((d) => `
+      <div class="check-item">
+        <div class="check-icon ${d.pass ? 'pass' : 'fail'}">${d.pass ? '✓' : '✕'}</div>
+        <div>
+          <strong>${d.label}</strong>
+          <div class="check-item-detail">${d.value}</div>
+        </div>
       </div>
-    </div>
-  `).join('');
+    `).join('');
+  }
 }
 
 
-/* ==========================================
-   Batch Processing Demo
-   ========================================== */
+/* ==========================================================================
+   Batch Processing Module
+   ========================================================================== */
 function initBatchProcessing() {
   const runBatchBtn = document.getElementById('runBatch');
   if (!runBatchBtn) return;
 
+  const batchDocs = [
+    { id: 'DOC-001', name: 'Passport — Maria Garcia', type: 'Passport', status: 'authentic', score: 97 },
+    { id: 'DOC-002', name: 'DL — Kevin Brown', type: 'License', status: 'authentic', score: 94 },
+    { id: 'DOC-003', name: 'ID — Yuki Tanaka', type: 'ID Card', status: 'authentic', score: 91 },
+    { id: 'DOC-004', name: 'Passport — Ivan Petrov', type: 'Passport', status: 'suspicious', score: 38 },
+    { id: 'DOC-005', name: 'DL — Emily White', type: 'License', status: 'authentic', score: 96 },
+    { id: 'DOC-006', name: 'Passport — Ahmed Hassan', type: 'Passport', status: 'fraudulent', score: 11 },
+    { id: 'DOC-007', name: 'ID — Sophie Lambert', type: 'ID Card', status: 'authentic', score: 93 },
+    { id: 'DOC-008', name: 'DL — Carlos Mendez', type: 'License', status: 'suspicious', score: 45 },
+  ];
+
+  let isBatchRunning = false;
+
   runBatchBtn.addEventListener('click', () => {
+    if (isBatchRunning) return;
+    isBatchRunning = true;
+    runBatchBtn.disabled = true;
+
     const tableBody = document.getElementById('batchTableBody');
     const batchResults = document.getElementById('batchResults');
     const progressEl = document.getElementById('batchProgress');
 
-    tableBody.innerHTML = '';
-    batchResults.classList.remove('active');
-    progressEl.classList.add('active');
-
-    const batchDocs = [
-      { id: 'DOC-001', name: 'Passport — Maria Garcia', type: 'Passport', status: 'authentic', score: 97 },
-      { id: 'DOC-002', name: 'DL — Kevin Brown', type: 'License', status: 'authentic', score: 94 },
-      { id: 'DOC-003', name: 'ID — Yuki Tanaka', type: 'ID Card', status: 'authentic', score: 91 },
-      { id: 'DOC-004', name: 'Passport — Ivan Petrov', type: 'Passport', status: 'suspicious', score: 38 },
-      { id: 'DOC-005', name: 'DL — Emily White', type: 'License', status: 'authentic', score: 96 },
-      { id: 'DOC-006', name: 'Passport — Ahmed Hassan', type: 'Passport', status: 'fraudulent', score: 11 },
-      { id: 'DOC-007', name: 'ID — Sophie Lambert', type: 'ID Card', status: 'authentic', score: 93 },
-      { id: 'DOC-008', name: 'DL — Carlos Mendez', type: 'License', status: 'suspicious', score: 45 },
-    ];
+    if (tableBody) tableBody.innerHTML = '';
+    if (batchResults) batchResults.classList.remove('active');
+    if (progressEl) progressEl.classList.add('active');
 
     let processed = 0;
-    const fill = progressEl.querySelector('.progress-fill');
+    const fill = progressEl ? progressEl.querySelector('.progress-fill') : null;
 
     const interval = setInterval(() => {
       if (processed >= batchDocs.length) {
         clearInterval(interval);
-        fill.style.width = '100%';
+        if (fill) fill.style.width = '100%';
         setTimeout(() => {
-          progressEl.classList.remove('active');
-          batchResults.classList.add('active');
+          if (progressEl) progressEl.classList.remove('active');
+          if (batchResults) batchResults.classList.add('active');
           updateBatchStats(batchDocs);
-        }, 400);
+          isBatchRunning = false;
+          runBatchBtn.disabled = false;
+        }, 300);
         return;
       }
 
       const doc = batchDocs[processed];
-      const row = document.createElement('tr');
-      row.style.animation = 'fadeIn 0.3s ease';
-      row.innerHTML = `
-        <td><code>${doc.id}</code></td>
-        <td>${doc.name}</td>
-        <td>${doc.type}</td>
-        <td><strong style="color:${doc.status === 'authentic' ? 'var(--success)' : doc.status === 'suspicious' ? 'var(--warning)' : 'var(--danger)'}">${doc.score}%</strong></td>
-        <td><span class="badge ${doc.status === 'authentic' ? 'badge-success' : doc.status === 'suspicious' ? 'badge-warning' : 'badge-danger'}">${doc.status.toUpperCase()}</span></td>
-      `;
-      tableBody.appendChild(row);
+      if (tableBody) {
+        const row = document.createElement('tr');
+        row.className = 'batch-row-animate';
+        const color = doc.status === 'authentic' ? 'var(--success)' :
+                      doc.status === 'suspicious' ? 'var(--warning)' : 'var(--danger)';
+        const badgeClass = doc.status === 'authentic' ? 'badge-success' :
+                           doc.status === 'suspicious' ? 'badge-warning' : 'badge-danger';
+
+        row.innerHTML = `
+          <td><code>${doc.id}</code></td>
+          <td>${doc.name}</td>
+          <td>${doc.type}</td>
+          <td><strong style="color:${color}">${doc.score}%</strong></td>
+          <td><span class="badge ${badgeClass}">${doc.status.toUpperCase()}</span></td>
+        `;
+        tableBody.appendChild(row);
+      }
 
       processed++;
-      fill.style.width = (processed / batchDocs.length * 100) + '%';
-    }, 600);
+      if (fill) fill.style.width = ((processed / batchDocs.length) * 100) + '%';
+    }, 400);
   });
 }
 
 function updateBatchStats(docs) {
-  const total = docs.length;
-  const authentic = docs.filter(d => d.status === 'authentic').length;
-  const suspicious = docs.filter(d => d.status === 'suspicious').length;
-  const fraudulent = docs.filter(d => d.status === 'fraudulent').length;
-
   const statsEl = document.getElementById('batchStats');
-  if (statsEl) {
-    statsEl.innerHTML = `
-      <div style="display:flex;gap:16px;flex-wrap:wrap">
-        <div style="flex:1;min-width:120px;padding:16px;background:var(--gray-50);border-radius:var(--radius-sm);text-align:center">
-          <div style="font-size:1.5rem;font-weight:800">${total}</div>
-          <div style="font-size:0.8rem;color:var(--gray-500)">Total Processed</div>
-        </div>
-        <div style="flex:1;min-width:120px;padding:16px;background:var(--success-light);border-radius:var(--radius-sm);text-align:center">
-          <div style="font-size:1.5rem;font-weight:800;color:var(--success)">${authentic}</div>
-          <div style="font-size:0.8rem;color:var(--gray-500)">Authentic</div>
-        </div>
-        <div style="flex:1;min-width:120px;padding:16px;background:var(--warning-light);border-radius:var(--radius-sm);text-align:center">
-          <div style="font-size:1.5rem;font-weight:800;color:var(--warning)">${suspicious}</div>
-          <div style="font-size:0.8rem;color:var(--gray-500)">Suspicious</div>
-        </div>
-        <div style="flex:1;min-width:120px;padding:16px;background:var(--danger-light);border-radius:var(--radius-sm);text-align:center">
-          <div style="font-size:1.5rem;font-weight:800;color:var(--danger)">${fraudulent}</div>
-          <div style="font-size:0.8rem;color:var(--gray-500)">Fraudulent</div>
-        </div>
+  if (!statsEl) return;
+
+  const total = docs.length;
+  const authentic = docs.filter((d) => d.status === 'authentic').length;
+  const suspicious = docs.filter((d) => d.status === 'suspicious').length;
+  const fraudulent = docs.filter((d) => d.status === 'fraudulent').length;
+
+  statsEl.innerHTML = `
+    <div class="batch-stats-grid">
+      <div class="batch-stat-box">
+        <div class="batch-stat-num">${total}</div>
+        <div class="batch-stat-lbl">Total Processed</div>
       </div>
-    `;
-  }
+      <div class="batch-stat-box stat-authentic">
+        <div class="batch-stat-num text-success">${authentic}</div>
+        <div class="batch-stat-lbl">Authentic</div>
+      </div>
+      <div class="batch-stat-box stat-suspicious">
+        <div class="batch-stat-num text-warning">${suspicious}</div>
+        <div class="batch-stat-lbl">Suspicious</div>
+      </div>
+      <div class="batch-stat-box stat-fraudulent">
+        <div class="batch-stat-num text-danger">${fraudulent}</div>
+        <div class="batch-stat-lbl">Fraudulent</div>
+      </div>
+    </div>
+  `;
 }
 
-// 67 Meme Easter Egg Function
+
+/* ==========================================================================
+   Easter Egg: 67 Meme Trigger
+   ========================================================================== */
 function trigger67MemeEasterEgg() {
-  // Create and show the 67 meme easter egg
+  const existing = document.getElementById('easterEgg67');
+  if (existing) existing.remove();
+
   const easterEgg = document.createElement('div');
-  easterEgg.style.position = 'fixed';
-  easterEgg.style.top = '50%';
-  easterEgg.style.left = '50%';
-  easterEgg.style.transform = 'translate(-50%, -50%)';
-  easterEgg.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-  easterEgg.style.color = 'white';
-  easterEgg.style.padding = '2rem';
-  easterEgg.style.borderRadius = '1rem';
-  easterEgg.style.textAlign = 'center';
-  easterEgg.style.zIndex = '9999';
-  easterEgg.style.fontFamily = '"JetBrains Mono", monospace';
-  easterEgg.style.boxShadow = '0 0 30px rgba(0, 255, 255, 0.5)';
-  easterEgg.style.animation = 'pulse 2s infinite';
+  easterEgg.id = 'easterEgg67';
+  easterEgg.className = 'easter-egg-modal';
+  easterEgg.setAttribute('role', 'alert');
 
   easterEgg.innerHTML = `
-    <div style="font-size: 4rem; margin-bottom: 1rem;">67</div>
-    <div style="font-size: 1.5rem; margin-bottom: 1rem;">THE NUMBER OF TRUTH</div>
-    <div style="font-size: 1.2rem; opacity: 0.8; max-width: 300px;">
+    <div class="easter-egg-number">67</div>
+    <div class="easter-egg-title">THE NUMBER OF TRUTH</div>
+    <div class="easter-egg-desc">
       In the depths of document verification,<br>
       the number 67 reveals the hidden patterns<br>
       that separate truth from deception.<br>
       <br>
-      Tap five times to unlock the truth...
+      <span class="easter-egg-sub">Tap five times to unlock the truth...</span>
     </div>
   `;
 
   document.body.appendChild(easterEgg);
 
-  // Remove after 3 seconds
   setTimeout(() => {
-    easterEgg.remove();
-  }, 3000);
+    if (easterEgg && easterEgg.parentNode) {
+      easterEgg.classList.add('fading');
+      setTimeout(() => easterEgg.remove(), 400);
+    }
+  }, 3200);
 }
-
-// Add CSS for pulse animation
-const style = document.createElement('style');
-style.textContent = `
-  @keyframes pulse {
-    0% { box-shadow: 0 0 30px rgba(0, 255, 255, 0.5); }
-    50% { box-shadow: 0 0 40px rgba(0, 255, 255, 0.8), 0 0 60px rgba(0, 255, 255, 0.4); }
-    100% { box-shadow: 0 0 30px rgba(0, 255, 255, 0.5); }
-  }
-`;
-document.head.appendChild(style);
